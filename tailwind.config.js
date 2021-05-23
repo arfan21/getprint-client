@@ -43,7 +43,7 @@ module.exports = {
         },
     },
     variants: {
-        extend: {},
+        fill: ["hover", "focus", "group-hover"], // this line does the trick
     },
     plugins: [],
 };

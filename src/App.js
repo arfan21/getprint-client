@@ -11,7 +11,7 @@ function App() {
     const history = createBrowserHistory({ basename: process.env.PUBLIC_URL });
 
     return (
-        <div className="max-w-screen-sm  my-0 mx-auto relative box-border">
+        <>
             <Router history={history}>
                 <Switch>
                     <Route exact path="/" component={Home}></Route>
@@ -25,7 +25,7 @@ function App() {
                     <Route path="*" component={NotFound}></Route>
                 </Switch>
             </Router>
-        </div>
+        </>
     );
 }
 

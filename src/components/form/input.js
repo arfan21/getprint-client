@@ -24,7 +24,7 @@ export const Input = ({
                 onFocus={onFocus}
                 onBlur={onBlur}
                 className={[
-                    "bg-poppins-blue-300 rounded-md text-poppins-blue-100 border-none outline-none px-4 py-2 hover:bg-indigo-800 focus:bg-indigo-800",
+                    "bg-poppins-blue-300 rounded-lg text-poppins-blue-100 border-none outline-none pl-4 pr-10 py-2 hover:bg-indigo-800 focus:bg-indigo-800",
                 ]}
             ></input>
         </div>

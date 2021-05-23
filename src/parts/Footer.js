@@ -1,7 +1,7 @@
 import React from "react";
-import { ReactComponent as HomeIcon } from "../assets/HomeIcon.svg";
-import { ReactComponent as FollowIcon } from "../assets/FollowIcon.svg";
-import { ReactComponent as ProfileIcon } from "../assets/ProfileIcon.svg";
+import { ReactComponent as HomeIcon } from "assets/HomeIcon.svg";
+import { ReactComponent as FollowIcon } from "assets/FollowIcon.svg";
+import { ReactComponent as ProfileIcon } from "assets/ProfileIcon.svg";
 import { Link, withRouter } from "react-router-dom";
 
 const Footer = ({ match, history }) => {

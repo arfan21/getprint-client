@@ -1,11 +1,27 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+* {
+    font-family: Poppins;
+    font-style: normal;
+}
 
 body {
     @apply bg-poppins-blue-100
 }
 
+#getprint-main{
+    height : 100vh;
+}
+
 .w-max-inherit{
     max-width: inherit;
+}
+
+.link-wrapped:before {
+    @apply cursor-pointer z-10 inset-0 absolute;
+    content: "";
 }
