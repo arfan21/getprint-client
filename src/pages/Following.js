@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import Footer from "parts/Footer";
 import { Header } from "../parts/Header";
-import { HomeBody } from "../parts/HomeBody";
+import { FollowingBody } from "parts/FollowingBody";
 
 export const Following = () => {
     const [height, setHeight] = useState("h-auto");
@@ -21,10 +21,9 @@ export const Following = () => {
                     <Header></Header>
                 </section>
                 <section
-                    id="homeBody"
                     className={`rounded-t-3xl bg-poppins-white container mx-auto px-4 -mt-6 ${height}`}
                 >
-                    <HomeBody changeHeight={changeHeight}></HomeBody>
+                    <FollowingBody></FollowingBody>
                 </section>
             </div>
             <div className="max-w-screen-sm rounded-t-2xl bg-white fixed container  mx-auto px-8 bottom-0 inset-x-0 z-20">

@@ -1,5 +1,5 @@
 import { partners } from "constants/api/partners";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { ListToko } from "./ListToko";
 
 import { ListCategory } from "./ListCategory";
