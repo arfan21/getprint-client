@@ -2,7 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { ReactComponent as StarIcon } from "assets/StarIcon.svg";
 
-export const ListToko = ({ data }) => {
+export const ListPartners = ({ data }) => {
     return (
         <div className="w-36 h-56 mx-2 p-3 rounded-2xl bg-white">
             <div className="relative">
@@ -21,13 +21,20 @@ export const ListToko = ({ data }) => {
                     </div>
 
                     <div className="py-1 flex items-center">
-                        <StarIcon className="fill-poppins-orange"></StarIcon>
-                        <p className="text-poppins-orange text-sm font-medium leading-3 inline px-1">
-                            4.5
-                        </p>
+                        <div>
+                            <StarIcon className="fill-poppins-orange"></StarIcon>
+                        </div>
+                        <div className="px-1">
+                            <p className="text-poppins-orange text-sm font-medium leading-3 inline">
+                                4.5
+                            </p>
+                        </div>
                     </div>
                 </div>
-                <Link to={`/toko/${data?.id}`} className="link-wrapped"></Link>
+                <Link
+                    to={`/partner/${data?.id}`}
+                    className="link-wrapped"
+                ></Link>
             </div>
         </div>
     );

@@ -12,7 +12,7 @@ export const Header = () => {
         setSearchValue(e.target.value);
     };
     return (
-        <div className="py-3 w-full">
+        <div className="py-5 w-full">
             {loginStatus ? (
                 <div className="flex flex-row w-full py-1 items-center">
                     <div className="px-2">
@@ -40,7 +40,7 @@ export const Header = () => {
                 </div>
             )}
 
-            <div className="pt-1 pb-8 w-full flex justify-center">
+            <div className="pt-4 pb-8 w-full flex justify-center">
                 <div className="w-full relative">
                     <Input
                         placeholder="find your favorite shop"

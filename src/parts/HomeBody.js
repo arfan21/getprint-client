@@ -1,6 +1,6 @@
 import { partners } from "constants/api/partners";
 import React, { useEffect, useState } from "react";
-import { ListToko } from "./ListToko";
+import { ListPartners } from "./ListPartners";
 
 import { ListCategory } from "./ListCategory";
 
@@ -53,7 +53,12 @@ export const HomeBody = () => {
                 </div>
                 <div className="py-5 flex flex-wrap items-center justify-center">
                     {dataPartner?.map((item, index) => {
-                        return <ListToko data={item} key={index}></ListToko>;
+                        return (
+                            <ListPartners
+                                data={item}
+                                key={index}
+                            ></ListPartners>
+                        );
                     })}
                 </div>
             </section>

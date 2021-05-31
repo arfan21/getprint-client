@@ -11,7 +11,6 @@ export const Home = () => {
                     <Header></Header>
                 </section>
                 <section
-                    id="homeBody"
                     className={`bg-poppins-white  rounded-t-3xl container mx-auto px-4 pb-5 -mt-6 `}
                 >
                     <HomeBody></HomeBody>

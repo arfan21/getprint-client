@@ -7,6 +7,7 @@ import { Following } from "pages/Following";
 import { Profile } from "pages/Profile";
 import { Login } from "pages/Login";
 import { Register } from "pages/Register";
+import DetailPartner from "pages/DetailPartner";
 
 function App() {
     const history = createBrowserHistory({ basename: process.env.PUBLIC_URL });
@@ -24,6 +25,11 @@ function App() {
                     <Route exact path="/profile" component={Profile}></Route>
                     <Route exact path="/login" component={Login}></Route>
                     <Route exact path="/register" component={Register}></Route>
+                    <Route
+                        exact
+                        path="/partner/:id"
+                        component={DetailPartner}
+                    ></Route>
                     <Route path="*" component={NotFound}></Route>
                 </Switch>
             </Router>

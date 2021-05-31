@@ -1,14 +1,17 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import { ReactComponent as DefaultAvatar } from "../assets/default-avatar.svg";
+import { ReactComponent as BackButton } from "assets/BackButton.svg";
 
 export const ProfileBody = () => {
     const location = useLocation();
-    const loginStatus = false;
+    const loginStatus = true;
     return (
-        <div className="py-6 px-3 h-full">
-            <div className="pb-4">
-                <Link to="/">{"<- Kembali"}</Link>
+        <div className="py-6 h-full">
+            <div className="pb-4 px-4">
+                <Link to="/">
+                    <BackButton className="fill-poppins-blue-700"></BackButton>
+                </Link>
             </div>
             {loginStatus ? (
                 <div className="px-5 my-5">
