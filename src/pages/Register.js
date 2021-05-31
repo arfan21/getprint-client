@@ -1,9 +1,9 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import queryString from "query-string";
-import { LoginForm } from "parts/LoginForm";
+import { RegisterForm } from "parts/RegisterForm";
 
-export const Login = () => {
+export const Register = () => {
     const location = useLocation();
     const queryParams = queryString.parse(location.search);
 
@@ -14,9 +14,9 @@ export const Login = () => {
                     <Link to={queryParams?.path ?? "/"}>{"<- Kembali"}</Link>
                 </div>
                 <div className="px-5 my-5 w-full flex items-center justify-center">
-                    <h1>Login</h1>
+                    <h1>Sign Up</h1>
                 </div>
-                <LoginForm></LoginForm>
+                <RegisterForm></RegisterForm>
             </div>
         </div>
     );

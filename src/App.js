@@ -3,9 +3,10 @@ import { Router, Switch, Route } from "react-router-dom";
 import { createBrowserHistory } from "history";
 import { NotFound } from "./pages/NotFound";
 import { Home } from "./pages/Home";
-import { Login } from "./pages/Login";
 import { Following } from "pages/Following";
 import { Profile } from "pages/Profile";
+import { Login } from "pages/Login";
+import { Register } from "pages/Register";
 
 function App() {
     const history = createBrowserHistory({ basename: process.env.PUBLIC_URL });
@@ -22,6 +23,7 @@ function App() {
                     ></Route>
                     <Route exact path="/profile" component={Profile}></Route>
                     <Route exact path="/login" component={Login}></Route>
+                    <Route exact path="/register" component={Register}></Route>
                     <Route path="*" component={NotFound}></Route>
                 </Switch>
             </Router>

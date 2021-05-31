@@ -48,8 +48,9 @@ export const Header = () => {
                         inputType="text"
                         value={searchValue}
                         name="search"
+                        className="bg-poppins-blue-300 hover:bg-indigo-800 focus:bg-indigo-800 text-poppins-blue-100"
                     ></Input>
-                    <span className="absolute right-2 top-2.5">
+                    <span className="absolute right-2 top-1.5">
                         <SearchIcon className="fill-poppins-blue-100 m-auto block"></SearchIcon>
                     </span>
                 </div>

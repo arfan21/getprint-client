@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import Footer from "parts/Footer";
 import { ProfileBody } from "parts/ProfileBody";
+import React from "react";
 
 export const Profile = () => {
     return (

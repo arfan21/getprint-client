@@ -4,7 +4,7 @@ import { ListToko } from "./ListToko";
 
 import { ListCategory } from "./ListCategory";
 
-export const HomeBody = ({ changeHeight }) => {
+export const HomeBody = () => {
     const [dataPartner, setdataPartner] = useState([]);
     const [category, setCategory] = useState("Terbaru");
 
@@ -13,13 +13,12 @@ export const HomeBody = ({ changeHeight }) => {
         partners
             .getAll(queryParams)
             .then((res) => {
-                const data = [];
-                for (let i = 0; i < 2; i++) {
+                const data = res?.data;
+                for (let i = 0; i < 8; i++) {
                     data.push(res?.data[0]);
                 }
-                // data[0] = res?.data[0];
+
                 setdataPartner(data);
-                changeHeight(data);
             })
             .catch((err) => {
                 console.log(err);
