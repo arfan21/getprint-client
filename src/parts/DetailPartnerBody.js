@@ -14,7 +14,7 @@ export const DetailPartnerBody = ({ partner }) => {
         fotocopy: 0,
     });
 
-    const [cart, setCart] = useState([]);
+    const [, setCart] = useState([]);
 
     const addToCartHandler = () => {
         setCart([]);
@@ -32,7 +32,7 @@ export const DetailPartnerBody = ({ partner }) => {
         }
 
         setCart((item) => {
-            if (item.length == 0) {
+            if (item.length === 0) {
                 alert('minimal harus order 1');
             } else {
                 console.log(item);
@@ -80,10 +80,10 @@ export const DetailPartnerBody = ({ partner }) => {
                         <div>
                             <Print className="w-20 h-20"></Print>
                         </div>
-                        <div className="px-5">
+                        <div className="px-5 w-full ">
                             <p className="text-poppins-blue-700">Print</p>
                             <p className="text-poppins-orange">
-                                Rp.{partner?.print}
+                                Rp.{partner?.print} / sheet
                             </p>
                         </div>
                         <div className="flex w-full justify-end">
@@ -98,10 +98,10 @@ export const DetailPartnerBody = ({ partner }) => {
                         <div>
                             <Scan className="w-20 h-20"></Scan>
                         </div>
-                        <div className="px-5">
+                        <div className="px-5 w-full ">
                             <p className="text-poppins-blue-700">Scan</p>
                             <p className="text-poppins-orange">
-                                Rp.{partner?.scan}
+                                Rp.{partner?.scan} / sheet
                             </p>
                         </div>
                         <div className="flex w-full justify-end">
@@ -116,11 +116,11 @@ export const DetailPartnerBody = ({ partner }) => {
                         <div>
                             <Photocopy className="w-20 h-20"></Photocopy>
                         </div>
-                        <div className="px-5">
+                        <div className="px-5 w-full ">
                             <p className="text-poppins-blue-700">Photocopy</p>
                             <p className="text-poppins-orange">
                                 {' '}
-                                Rp.{partner?.fotocopy}
+                                Rp.{partner?.fotocopy} / sheet
                             </p>
                         </div>
                         <div className="flex w-full justify-end">

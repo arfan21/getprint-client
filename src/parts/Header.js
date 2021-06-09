@@ -1,26 +1,34 @@
-import { Input } from "components/form/input";
-import React, { useState } from "react";
-import { ReactComponent as DefaultAvatar } from "../assets/default-avatar.svg";
-import { ReactComponent as SearchIcon } from "../assets/SearchIcon.svg";
-import { ReactComponent as Logo } from "../assets/Logo.svg";
+import React, { useState } from 'react';
+import { ReactComponent as DefaultAvatar } from '../assets/default-avatar.svg';
+import { ReactComponent as SearchIcon } from '../assets/SearchIcon.svg';
+import { ReactComponent as Logo } from '../assets/Logo.svg';
+import { useSelector } from 'react-redux';
 
 export const Header = () => {
-    const [loginStatus, setloginStatus] = useState(true);
-    const [searchValue, setSearchValue] = useState("");
+    const [searchValue, setSearchValue] = useState('');
     const name = undefined;
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
+    const user = useSelector((state) => state.users);
     return (
         <div className="py-5 w-full">
-            {loginStatus ? (
+            {user ? (
                 <div className="flex flex-row w-full py-1 items-center">
                     <div className="px-2">
-                        <DefaultAvatar className="fill-poppins-gray w-14 h-14"></DefaultAvatar>
+                        {user?.picture ? (
+                            <img
+                                src={user?.picture}
+                                alt={user?.name}
+                                className="w-14 h-14"
+                            ></img>
+                        ) : (
+                            <DefaultAvatar className="fill-poppins-gray w-14 h-14"></DefaultAvatar>
+                        )}
                     </div>
                     <div className="px-2">
                         <p className="text-white">
-                            Hello, {name ?? "Nickname"}
+                            Hello, {user?.name ?? 'Nickname'}
                         </p>
                         <p className="text-poppins-blue-100">
                             what are yout looking for on Getprint?

@@ -1,16 +1,30 @@
-import React from "react";
-import useForm from "helpers/hooks/useForm";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { users } from 'constants/api/users';
+import { useForm } from 'helpers/hooks/useForm';
+import { populateProfile } from 'store/actions/users';
+import { useDispatch } from 'react-redux';
 
 export const LoginForm = () => {
+    const history = useHistory();
     const [state, setState] = useForm({
-        email: "",
-        password: "",
+        email: '',
+        password: '',
     });
-
-    const submitHandler = (e) => {
+    const dispatch = useDispatch();
+    const submitHandler = async (e) => {
         e.preventDefault();
-        console.log(state);
+        try {
+            const dataUserLogin = await users.login(state);
+            document.cookie = `X-GETPRINT-KEY=${dataUserLogin?.data?.token};SameSite=None; Secure`;
+
+            const dataUser = await users.getById();
+            dispatch(populateProfile(dataUser.data));
+
+            history.push('/');
+        } catch (error) {
+            console.log(error);
+        }
     };
     return (
         <>
@@ -71,7 +85,7 @@ export const LoginForm = () => {
                 </form>
                 <div className="absolute inset-x-0 bottom-0 items-center text-center">
                     <p className="text-sm">
-                        don't have an account ?{" "}
+                        don't have an account ?{' '}
                         <span className="hover:text-poppins-orange">
                             <Link to="/register?path=/login">Sign up now</Link>
                         </span>

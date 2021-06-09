@@ -1,13 +1,14 @@
-import { partners } from "constants/api/partners";
-import React, { useEffect, useState } from "react";
-import { ListPartners } from "./ListPartners";
+import { partners } from 'constants/api/partners';
+import React, { useEffect, useState } from 'react';
+import { ListPartners } from './ListPartners';
 
-import { ListCategory } from "./ListCategory";
+import { ListCategory } from './ListCategory';
 
 export const HomeBody = () => {
     const [dataPartner, setdataPartner] = useState([]);
-    const [category, setCategory] = useState("Terbaru");
+    const [category, setCategory] = useState('Terbaru');
 
+    
     useEffect(() => {
         const queryParams = {};
         partners

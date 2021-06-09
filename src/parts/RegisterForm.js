@@ -1,14 +1,14 @@
-import useForm from "helpers/hooks/useForm";
-import React from "react";
-import { Link } from "react-router-dom";
+import { useForm } from 'helpers/hooks/useForm';
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 export const RegisterForm = () => {
     const [state, setState] = useForm({
-        name: "",
-        email: "",
-        password: "",
-        phone_number: "",
-        address: "",
+        name: '',
+        email: '',
+        password: '',
+        phone_number: '',
+        address: '',
     });
 
     const submitHandler = (e) => {
@@ -115,7 +115,7 @@ export const RegisterForm = () => {
                 </form>
                 <div className="absolute inset-x-0 bottom-0 items-center text-center">
                     <p className="text-sm">
-                        already have an account ?{" "}
+                        already have an account ?{' '}
                         <span className="hover:text-poppins-orange">
                             <Link to="/login?path=/register">Login now</Link>
                         </span>

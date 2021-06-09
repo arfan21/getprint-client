@@ -1,11 +1,13 @@
-import React from "react";
-import { Link, useLocation } from "react-router-dom";
-import { ReactComponent as DefaultAvatar } from "../assets/default-avatar.svg";
-import { ReactComponent as BackButton } from "assets/BackButton.svg";
+import React from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { ReactComponent as DefaultAvatar } from '../assets/default-avatar.svg';
+import { ReactComponent as BackButton } from 'assets/BackButton.svg';
+import { useSelector } from 'react-redux';
 
 export const ProfileBody = () => {
     const location = useLocation();
     const loginStatus = false;
+    const user = useSelector((state) => state.users);
     return (
         <div className="py-6 h-full">
             <div className="pb-4 px-4">
@@ -13,10 +15,18 @@ export const ProfileBody = () => {
                     <BackButton className="fill-poppins-blue-700"></BackButton>
                 </Link>
             </div>
-            {loginStatus ? (
+            {user ? (
                 <div className="px-5 my-5">
                     <div>
-                        <DefaultAvatar></DefaultAvatar>
+                        {user?.picture ? (
+                            <img
+                                src={user?.picture}
+                                alt={user?.name}
+                                className="w-14 h-14"
+                            ></img>
+                        ) : (
+                            <DefaultAvatar></DefaultAvatar>
+                        )}
                     </div>
                     <div className="flex flex-col py-2">
                         <div className="py-2">
