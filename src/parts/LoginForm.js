@@ -1,7 +1,6 @@
 import React from "react";
-import { Input } from "components/form/input";
 import useForm from "helpers/hooks/useForm";
-import { Link, useLocation } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 export const LoginForm = () => {
     const [state, setState] = useForm({
@@ -21,26 +20,35 @@ export const LoginForm = () => {
                     onSubmit={submitHandler}
                 >
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Email"
-                            placeholder="insert your email here"
+                        <label
+                            className="text-poppins-blue-700"
+                            htmlFor="email"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
+                            placeholder="jhon@example.com"
                             name="email"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="email"
                             value={state.email}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Password"
-                            placeholder="insert your password here"
+                        <label
+                            className="text-poppins-blue-700"
+                            htmlFor="password"
+                        >
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
                             name="password"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="password"
                             value={state.password}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
                         <button className="border border-poppins-blue-300 rounded-2xl p-1 w-full focus:outline-none focus:border-none text-poppins-blue-300">

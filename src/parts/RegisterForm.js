@@ -1,4 +1,3 @@
-import { Input } from "components/form/input";
 import useForm from "helpers/hooks/useForm";
 import React from "react";
 import { Link } from "react-router-dom";
@@ -25,59 +24,80 @@ export const RegisterForm = () => {
                     onSubmit={submitHandler}
                 >
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Name"
-                            placeholder="input your name here"
+                        <label className="text-poppins-blue-700" htmlFor="name">
+                            Name
+                        </label>
+                        <input
+                            type="text"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
+                            placeholder="jhon"
                             name="name"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="text"
                             value={state.name}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Email"
-                            placeholder="input your email here"
+                        <label
+                            className="text-poppins-blue-700"
+                            htmlFor="email"
+                        >
+                            Email
+                        </label>
+                        <input
+                            type="email"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
+                            placeholder="jhon@example.com"
                             name="email"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="email"
                             value={state.email}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Phone Number"
-                            placeholder="input your phone number here"
+                        <label
+                            className="text-poppins-blue-700"
+                            htmlFor="phone_number"
+                        >
+                            Phone Number
+                        </label>
+                        <input
+                            type="text"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
+                            placeholder="089122331122"
                             name="phone_number"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="text"
                             value={state.phone_number}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Address"
-                            placeholder="input your address here"
+                        <label
+                            className="text-poppins-blue-700"
+                            htmlFor="address"
+                        >
+                            Address
+                        </label>
+                        <input
+                            type="text"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
+                            placeholder="jl kota tua no 57, kota baru, jakarta"
                             name="address"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="text"
                             value={state.address}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
-                        <Input
-                            labelName="Password"
-                            placeholder="input your password here"
+                        <label
+                            className="text-poppins-blue-700"
+                            htmlFor="password"
+                        >
+                            Password
+                        </label>
+                        <input
+                            type="password"
+                            className="form-input w-full p-1 pl-3 bg-poppins-white text-poppins-blue-700 border-0 border-b-2 border-gray-200 focus:ring-0 focus:border-poppins-blue-700"
                             name="password"
-                            className="border-2 border-poppins-blue-300 hover:border-poppins-blue-700 focus:border-poppins-blue-700 focus:bg-poppins-white"
-                            inputType="password"
                             value={state.password}
                             onChange={setState}
-                        ></Input>
+                        ></input>
                     </div>
                     <div className="w-full py-2">
                         <button className="border border-poppins-blue-300 rounded-2xl p-1 w-full focus:outline-none focus:border-none text-poppins-blue-300">

@@ -42,14 +42,14 @@ export const Header = () => {
 
             <div className="pt-4 pb-8 w-full flex justify-center">
                 <div className="w-full relative">
-                    <Input
+                    <input
+                        type="text"
                         placeholder="find your favorite shop"
-                        onChange={onChange}
-                        inputType="text"
+                        className="form-input w-full p-1 pl-3 pr-9 bg-poppins-blue-300 hover:bg-indigo-800 focus:bg-indigo-800 text-poppins-blue-100 border-0 border-b-2 border-indigo-800 focus:ring-0 focus:border-poppins-blue-100 hover:border-poppins-blue-100 rounded-lg"
                         value={searchValue}
                         name="search"
-                        className="bg-poppins-blue-300 hover:bg-indigo-800 focus:bg-indigo-800 text-poppins-blue-100"
-                    ></Input>
+                        onChange={onChange}
+                    ></input>
                     <span className="absolute right-2 top-1.5">
                         <SearchIcon className="fill-poppins-blue-100 m-auto block"></SearchIcon>
                     </span>

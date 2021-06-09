@@ -40,5 +40,9 @@ module.exports = {
     variants: {
         fill: ["hover", "focus", "group-hover"], // this line does the trick
     },
-    plugins: [],
+    plugins: [
+        require("@tailwindcss/forms")({
+            strategy: "class",
+        }),
+    ],
 };

@@ -5,7 +5,7 @@ import { ReactComponent as BackButton } from "assets/BackButton.svg";
 
 export const ProfileBody = () => {
     const location = useLocation();
-    const loginStatus = true;
+    const loginStatus = false;
     return (
         <div className="py-6 h-full">
             <div className="pb-4 px-4">

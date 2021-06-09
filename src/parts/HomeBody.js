@@ -51,7 +51,7 @@ export const HomeBody = () => {
                         {`Toko ${category}`}
                     </p>
                 </div>
-                <div className="py-5 flex flex-wrap items-center justify-center">
+                <div className="py-2 flex flex-col items-center justify-center">
                     {dataPartner?.map((item, index) => {
                         return (
                             <ListPartners
