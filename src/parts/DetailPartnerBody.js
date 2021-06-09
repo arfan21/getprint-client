@@ -1,11 +1,45 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as GpsIcon } from 'assets/gps.svg';
 import { ReactComponent as StarIcon } from 'assets/StarIcon.svg';
 import { ReactComponent as Print } from 'assets/Print.svg';
 import { ReactComponent as Scan } from 'assets/Scan.svg';
 import { ReactComponent as Photocopy } from 'assets/PhotoCopy.svg';
 import { ReactComponent as Cart } from 'assets/Cart.svg';
+import { Qty } from 'components/form/qty';
+
 export const DetailPartnerBody = ({ partner }) => {
+    const [state, setState] = useState({
+        print: 0,
+        scan: 0,
+        fotocopy: 0,
+    });
+
+    const [cart, setCart] = useState([]);
+
+    const addToCartHandler = () => {
+        setCart([]);
+        for (let key in state) {
+            if (state[key] > 0) {
+                setCart((item) => [
+                    ...item,
+                    {
+                        order_type: key,
+                        qty: state[key],
+                        partner_id: partner?.id,
+                    },
+                ]);
+            }
+        }
+
+        setCart((item) => {
+            if (item.length == 0) {
+                alert('minimal harus order 1');
+            } else {
+                console.log(item);
+            }
+        });
+    };
+
     return (
         <>
             <section className="pt-6 px-3">
@@ -52,6 +86,13 @@ export const DetailPartnerBody = ({ partner }) => {
                                 Rp.{partner?.print}
                             </p>
                         </div>
+                        <div className="flex w-full justify-end">
+                            <Qty
+                                name="print"
+                                state={state}
+                                setState={setState}
+                            ></Qty>
+                        </div>
                     </div>
                     <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center">
                         <div>
@@ -62,6 +103,13 @@ export const DetailPartnerBody = ({ partner }) => {
                             <p className="text-poppins-orange">
                                 Rp.{partner?.scan}
                             </p>
+                        </div>
+                        <div className="flex w-full justify-end">
+                            <Qty
+                                name="scan"
+                                state={state}
+                                setState={setState}
+                            ></Qty>
                         </div>
                     </div>
                     <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center">
@@ -75,19 +123,29 @@ export const DetailPartnerBody = ({ partner }) => {
                                 Rp.{partner?.fotocopy}
                             </p>
                         </div>
+                        <div className="flex w-full justify-end">
+                            <Qty
+                                name="fotocopy"
+                                state={state}
+                                setState={setState}
+                            ></Qty>
+                        </div>
                     </div>
                 </div>
             </section>
             <section className="py-3 px-3">
                 <div className="flex items-start justify-items-start flex-col w-full">
-                    <div className="bg-poppins-orange shadow py-1.5 rounded-lg px-3 my-2 w-full flex items-center justify-center cursor-pointer">
+                    <button
+                        onClick={addToCartHandler}
+                        className="bg-poppins-orange shadow py-1.5 rounded-lg px-3 my-2 w-full flex items-center justify-center"
+                    >
                         <div className="px-2">
                             <Cart className="w-7 h-7 fill-white"></Cart>
                         </div>
                         <div className="px-2">
                             <p className="text-white">Add to cart</p>
                         </div>
-                    </div>
+                    </button>
                 </div>
             </section>
         </>
