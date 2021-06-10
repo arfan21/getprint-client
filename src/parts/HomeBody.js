@@ -1,21 +1,20 @@
 import { partners } from 'constants/api/partners';
 import React, { useEffect, useState } from 'react';
-import { ListPartners } from './ListPartners';
 
 import { ListCategory } from './ListCategory';
+import ListPartners from './ListPartners';
 
 export const HomeBody = () => {
     const [dataPartner, setdataPartner] = useState([]);
     const [category, setCategory] = useState('Terbaru');
 
-    
     useEffect(() => {
         const queryParams = {};
         partners
             .getAll(queryParams)
             .then((res) => {
                 const data = res?.data;
-                for (let i = 0; i < 8; i++) {
+                for (let i = 0; i < 50; i++) {
                     data.push(res?.data[0]);
                 }
 

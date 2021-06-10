@@ -1,7 +1,7 @@
-import React from "react";
-import Footer from "parts/Footer";
-import { Header } from "../parts/Header";
-import { HomeBody } from "../parts/HomeBody";
+import React from 'react';
+import Footer from 'parts/Footer';
+import { Header } from '../parts/Header';
+import { HomeBody } from '../parts/HomeBody';
 
 export const Home = () => {
     return (
@@ -15,7 +15,7 @@ export const Home = () => {
                 >
                     <HomeBody></HomeBody>
                 </section>
-                <div className="items-center justify-center rounded-t-2xl bg-white fixed container w-max-inherit px-8 bottom-0 inset-x-0 z-20 m-auto">
+                <div className="items-center justify-center rounded-t-2xl bg-white fixed container w-max-inherit px-8 bottom-0 inset-x-0 z-50 m-auto">
                     <Footer></Footer>
                 </div>
             </div>

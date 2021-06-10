@@ -1,18 +1,31 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { ReactComponent as FollowIcon } from 'assets/FollowIcon.svg';
 import { ReactComponent as LoveButton } from 'assets/LoveButton.svg';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const DetailPartnerHeader = ({ partner }) => {
     const [following, setFollowing] = useState(false);
+    const lazyParentRef = useRef();
+
+    useEffect(() => {
+        const lazyParentCurrent = lazyParentRef.current;
+        lazyParentCurrent.firstChild.style.display = 'block';
+    }, []);
+
     return (
         <>
-            <img
-                src={partner?.picture}
-                alt={partner?.name ?? 'picture'}
-                className="h-60 w-full z-0"
-            ></img>
+            <div className="w-full z-0" ref={lazyParentRef}>
+                <LazyLoadImage
+                    src={partner?.picture}
+                    alt={partner?.name ?? 'picture'}
+                    className="h-60 w-full"
+                    effect="blur"
+                ></LazyLoadImage>
+            </div>
+
             <div className="absolute top-0 px-8 py-3 flex justify-between w-full">
                 <div className="w-8 h-8">
                     <div className="bg-white w-full h-full flex items-center justify-center rounded-lg shadow">

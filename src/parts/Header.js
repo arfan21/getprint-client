@@ -3,6 +3,8 @@ import { ReactComponent as DefaultAvatar } from '../assets/default-avatar.svg';
 import { ReactComponent as SearchIcon } from '../assets/SearchIcon.svg';
 import { ReactComponent as Logo } from '../assets/Logo.svg';
 import { useSelector } from 'react-redux';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const Header = () => {
     const [searchValue, setSearchValue] = useState('');
@@ -10,6 +12,7 @@ export const Header = () => {
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
+
     const user = useSelector((state) => state.users);
     return (
         <div className="py-5 w-full">
@@ -17,11 +20,12 @@ export const Header = () => {
                 <div className="flex flex-row w-full py-1 items-center">
                     <div className="px-2">
                         {user?.picture ? (
-                            <img
+                            <LazyLoadImage
                                 src={user?.picture}
                                 alt={user?.name}
                                 className="w-14 h-14"
-                            ></img>
+                                effect="blur"
+                            ></LazyLoadImage>
                         ) : (
                             <DefaultAvatar className="fill-poppins-gray w-14 h-14"></DefaultAvatar>
                         )}

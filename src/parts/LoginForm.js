@@ -4,19 +4,25 @@ import { users } from 'constants/api/users';
 import { useForm } from 'helpers/hooks/useForm';
 import { populateProfile } from 'store/actions/users';
 import { useDispatch } from 'react-redux';
+import { useCookies } from 'react-cookie';
 
 export const LoginForm = () => {
+    const [, setCookies] = useCookies();
     const history = useHistory();
     const [state, setState] = useForm({
         email: '',
         password: '',
     });
+
     const dispatch = useDispatch();
     const submitHandler = async (e) => {
         e.preventDefault();
         try {
             const dataUserLogin = await users.login(state);
-            document.cookie = `X-GETPRINT-KEY=${dataUserLogin?.data?.token};SameSite=None; Secure`;
+            setCookies('X-GETPRINT-KEY', dataUserLogin?.data?.token, {
+                sameSite: 'none',
+                secure: true,
+            });
 
             const dataUser = await users.getById();
             dispatch(populateProfile(dataUser.data));

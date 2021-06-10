@@ -2,8 +2,15 @@ FROM node:alpine3.13
 
 WORKDIR /app
 
-COPY package.json .
+ENV PATH /app/node_modules/.bin:$PATH  
 
+COPY package.json .
+COPY yarn.lock .
+
+RUN yarn set version berry
+RUN yarn plugin import interactive-tools
+
+COPY .yarnrc.yml .
 RUN yarn install
 
 COPY . .

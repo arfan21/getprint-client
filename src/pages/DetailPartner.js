@@ -1,13 +1,12 @@
 import { partners } from 'constants/api/partners';
 import React, { useEffect, useState } from 'react';
-import { withRouter } from 'react-router';
 
 import { DetailPartnerHeader } from 'parts/DetailPartnerHeader';
 import { DetailPartnerBody } from 'parts/DetailPartnerBody';
+import { withRouter } from 'react-router';
 
 const DetailPartner = ({ match, history }) => {
     const [partner, setPartner] = useState({});
-
     const partnerId = match.params?.id;
 
     useEffect(() => {
