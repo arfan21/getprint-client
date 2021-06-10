@@ -31,7 +31,7 @@ export const Header = () => {
                             Hello, {user?.name ?? 'Nickname'}
                         </p>
                         <p className="text-poppins-blue-100">
-                            what are yout looking for on Getprint?
+                            What are yout looking for on Getprint?
                         </p>
                     </div>
                 </div>
@@ -42,7 +42,7 @@ export const Header = () => {
                     </div>
                     <div className="px-2 flex justify-center items-center">
                         <p className="text-poppins-blue-100">
-                            what are yout looking for on Getprint?
+                            Hi, What are yout looking for on Getprint?
                         </p>
                     </div>
                 </div>
