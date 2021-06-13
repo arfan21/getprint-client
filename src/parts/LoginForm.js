@@ -1,13 +1,11 @@
-import React from 'react';
 import { Link, useHistory } from 'react-router-dom';
 import { users } from 'constants/api/users';
 import { useForm } from 'helpers/hooks/useForm';
 import { populateProfile } from 'store/actions/users';
 import { useDispatch } from 'react-redux';
-import { useCookies } from 'react-cookie';
+import Cookies from 'universal-cookie';
 
-export const LoginForm = () => {
-    const [, setCookies] = useCookies();
+export const LoginForm = ({ setIsLoading }) => {
     const history = useHistory();
     const [state, setState] = useForm({
         email: '',
@@ -16,14 +14,27 @@ export const LoginForm = () => {
 
     const dispatch = useDispatch();
     const submitHandler = async (e) => {
+        setIsLoading(true);
+        const cookies = new Cookies();
         e.preventDefault();
         try {
             const dataUserLogin = await users.login(state);
-            setCookies('X-GETPRINT-KEY', dataUserLogin?.data?.token, {
+
+            cookies.set('X-GETPRINT-KEY', dataUserLogin?.data?.token, {
                 sameSite: 'none',
                 secure: true,
             });
-
+            cookies.set(
+                'X-GETPRINT-REFRESH-TOKEN',
+                JSON.stringify({
+                    refresh_token: dataUserLogin?.data?.refresh_token,
+                    email: state.email,
+                }),
+                {
+                    sameSite: 'none',
+                    secure: true,
+                },
+            );
             const dataUser = await users.getById();
             dispatch(populateProfile(dataUser.data));
 

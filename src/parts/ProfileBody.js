@@ -1,13 +1,20 @@
 import React from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { ReactComponent as DefaultAvatar } from '../assets/default-avatar.svg';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
 import { useSelector } from 'react-redux';
+import Cookies from 'universal-cookie';
 
 export const ProfileBody = () => {
+    const cookies = new Cookies();
+    const history = useHistory();
     const location = useLocation();
-    const loginStatus = false;
     const user = useSelector((state) => state.users);
+    const logoutHandler = () => {
+        cookies.remove('X-GETPRINT-KEY');
+        cookies.remove('X-GETPRINT-REFRESH-TOKEN');
+        history.go('/');
+    };
     return (
         <div className="py-6 h-full">
             <div className="pb-4 px-4">
@@ -65,7 +72,10 @@ export const ProfileBody = () => {
                         </div>
                     </div>
                     <div className="py-10">
-                        <div className="flex justify-center border border-red-600 rounded-2xl p-1">
+                        <div
+                            className="flex justify-center border border-red-600 rounded-2xl p-1 cursor-pointer"
+                            onClick={logoutHandler}
+                        >
                             <button className="focus:outline-none focus:border-none text-red-600">
                                 Logout
                             </button>

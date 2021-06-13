@@ -8,7 +8,6 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 
 export const Header = () => {
     const [searchValue, setSearchValue] = useState('');
-    const name = undefined;
     const onChange = (e) => {
         setSearchValue(e.target.value);
     };
@@ -32,7 +31,7 @@ export const Header = () => {
                     </div>
                     <div className="px-2">
                         <p className="text-white">
-                            Hello, {user?.name ?? 'Nickname'}
+                            Hi, {user?.name ?? 'Nickname'}
                         </p>
                         <p className="text-poppins-blue-100">
                             What are yout looking for on Getprint?

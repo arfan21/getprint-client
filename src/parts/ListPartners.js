@@ -13,10 +13,11 @@ import 'react-lazy-load-image-component/src/effects/blur.css';
 const ListPartners = ({ data, scrollPosition }) => {
     const [following, setFollowing] = useState(false);
     return (
-        <div className="h-32 flex items-center justify-center p-1 my-2 rounded-2xl bg-white w-full">
+        <div
+            className={`h-32 flex items-center justify-center p-1 my-2 rounded-2xl bg-white w-full`}
+        >
             <div className="relative flex w-full">
                 <figure className="relative p-1 w-1/3 sm:w-1/5 flex items-center justify-center">
-                    {/* {!isImageLoaded && <p className="absolute">Loading</p>} */}
                     <LazyLoadImage
                         src={data?.picture ?? ''}
                         alt={data?.name ?? 'Picture'}
@@ -24,12 +25,6 @@ const ListPartners = ({ data, scrollPosition }) => {
                         scrollPosition={scrollPosition}
                         effect="blur"
                     ></LazyLoadImage>
-                    {/* <img
-                        ${
-                            isImageLoaded ? 'block' : 'invisible'
-                        }
-                        onLoad={imageLoadHandler}
-                    ></img> */}
                     <div
                         className={`absolute flex items-center bottom-0 left-1/2 bg-white rounded-lg p-0 shadow`}
                         style={{ transform: 'translateX(-50%)' }}

@@ -6,6 +6,7 @@ import { ReactComponent as Scan } from 'assets/Scan.svg';
 import { ReactComponent as Photocopy } from 'assets/PhotoCopy.svg';
 import { ReactComponent as Cart } from 'assets/Cart.svg';
 import { Qty } from 'components/form/qty';
+import { toast } from 'react-toastify';
 
 export const DetailPartnerBody = ({ partner }) => {
     const [state, setState] = useState({
@@ -33,7 +34,14 @@ export const DetailPartnerBody = ({ partner }) => {
 
         setCart((item) => {
             if (item.length === 0) {
-                alert('minimal harus order 1');
+                const toastId = 'item-length';
+                console.log('Order Minimum is 1 ');
+                if (!toast.isActive(toastId.current)) {
+                    toast.error('Order Minimum is 1 ', {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: toastId,
+                    });
+                }
             } else {
                 console.log(item);
             }

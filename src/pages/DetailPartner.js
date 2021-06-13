@@ -3,8 +3,7 @@ import React, { useEffect, useState } from 'react';
 
 import { DetailPartnerHeader } from 'parts/DetailPartnerHeader';
 import { DetailPartnerBody } from 'parts/DetailPartnerBody';
-import { withRouter } from 'react-router';
-
+import { withRouter } from 'react-router-dom';
 const DetailPartner = ({ match, history }) => {
     const [partner, setPartner] = useState({});
     const partnerId = match.params?.id;

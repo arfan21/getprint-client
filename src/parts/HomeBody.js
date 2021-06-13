@@ -1,5 +1,6 @@
 import { partners } from 'constants/api/partners';
 import React, { useEffect, useState } from 'react';
+import CardLoader from './CardLoader';
 
 import { ListCategory } from './ListCategory';
 import ListPartners from './ListPartners';
@@ -7,8 +8,10 @@ import ListPartners from './ListPartners';
 export const HomeBody = () => {
     const [dataPartner, setdataPartner] = useState([]);
     const [category, setCategory] = useState('Terbaru');
+    const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
+        setIsLoading(true);
         const queryParams = {};
         partners
             .getAll(queryParams)
@@ -19,9 +22,11 @@ export const HomeBody = () => {
                 }
 
                 setdataPartner(data);
+                setIsLoading(false);
             })
             .catch((err) => {
                 console.log(err);
+                setIsLoading(false);
             });
     }, []);
 
@@ -52,6 +57,8 @@ export const HomeBody = () => {
                     </p>
                 </div>
                 <div className="py-2 flex flex-col items-center justify-center">
+                    {isLoading && <CardLoader key="1"></CardLoader>}
+                    {isLoading && <CardLoader key="2"></CardLoader>}
                     {dataPartner?.map((item, index) => {
                         return (
                             <ListPartners
