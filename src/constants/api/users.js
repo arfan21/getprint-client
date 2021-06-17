@@ -10,9 +10,10 @@ export const users = {
     getById: (token) =>
         axios.get(`/v1/user`, {
             auth: token,
-            withCredentials: true,
         }),
     login: (data = {}) => axios.post('/v1/auth/login', data),
+    verify: () => axios.post('/v1/auth/verify'),
+    logout: () => axios.post('/v1/auth/logout'),
     refreshToken: (data = {}) =>
         axios.post('/v1/auth/refresh-token', data, {
             headers: {

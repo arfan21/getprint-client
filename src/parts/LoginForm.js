@@ -1,9 +1,10 @@
-import { Link, useHistory } from 'react-router-dom';
+import { Link, useHistory, useLocation } from 'react-router-dom';
 import { users } from 'constants/api/users';
 import { useForm } from 'helpers/hooks/useForm';
 import { populateProfile } from 'store/actions/users';
 import { useDispatch } from 'react-redux';
 import Cookies from 'universal-cookie';
+import queryString from 'query-string';
 
 export const LoginForm = ({ setIsLoading }) => {
     const history = useHistory();
@@ -11,6 +12,8 @@ export const LoginForm = ({ setIsLoading }) => {
         email: '',
         password: '',
     });
+    const location = useLocation();
+    const queryParams = queryString.parse(location.search);
 
     const dispatch = useDispatch();
     const submitHandler = async (e) => {
@@ -18,29 +21,13 @@ export const LoginForm = ({ setIsLoading }) => {
         const cookies = new Cookies();
         e.preventDefault();
         try {
-            const dataUserLogin = await users.login(state);
-
-            cookies.set('X-GETPRINT-KEY', dataUserLogin?.data?.token, {
-                sameSite: 'none',
-                secure: true,
-            });
-            cookies.set(
-                'X-GETPRINT-REFRESH-TOKEN',
-                JSON.stringify({
-                    refresh_token: dataUserLogin?.data?.refresh_token,
-                    email: state.email,
-                }),
-                {
-                    sameSite: 'none',
-                    secure: true,
-                },
-            );
-            const dataUser = await users.getById();
+            await users.login(state);
+            const dataUser = await users.verify();
             dispatch(populateProfile(dataUser.data));
-
             history.push('/');
         } catch (error) {
             console.log(error);
+            setIsLoading(false);
         }
     };
     return (

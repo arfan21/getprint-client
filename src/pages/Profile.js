@@ -1,7 +1,8 @@
-import { ProfileBody } from "parts/ProfileBody";
-import React from "react";
+import { ProfileBody } from 'parts/ProfileBody';
+import React from 'react';
+import { withRouter } from 'react-router-dom';
 
-export const Profile = () => {
+const Profile = () => {
     return (
         <>
             <div className="max-w-screen-sm  my-0 mx-auto relative box-border h-full">
@@ -12,3 +13,5 @@ export const Profile = () => {
         </>
     );
 };
+
+export default withRouter(Profile);

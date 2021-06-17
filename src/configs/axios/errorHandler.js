@@ -2,34 +2,26 @@ import { toast } from 'react-toastify';
 import axios from './index';
 import { users } from 'constants/api/users';
 import Cookies from 'universal-cookie';
+import history from 'helpers/history';
 
 export default async function ErrorHandler(error) {
     const cookies = new Cookies();
     let message;
     if (error.response) {
         const originalRequest = error.config;
-
+        console.log();
         if (error.response.status === 500) {
             message = 'Something went terribly wrong';
         } else if (error.response.status === 401 && !originalRequest._retry) {
             try {
                 if (originalRequest.url === '/v1/auth/refresh-token') {
-                    cookies.remove('X-GETPRINT-KEY');
-                    cookies.remove('X-GETPRINT-REFRESH-TOKEN');
-
+                    await users.logout();
                     throw new Error('session expired, please re login!');
                 }
 
                 originalRequest._retry = true;
 
-                const userCookeis =
-                    cookies.get('X-GETPRINT-REFRESH-TOKEN') ?? null;
-                const newTokenRes = await users.refreshToken(userCookeis);
-
-                cookies.set('X-GETPRINT-KEY', newTokenRes?.data?.token, {
-                    sameSite: 'none',
-                    secure: true,
-                });
+                await users.refreshToken();
 
                 return axios(originalRequest);
             } catch (error) {
@@ -45,10 +37,10 @@ export default async function ErrorHandler(error) {
                 toast.error(message, {
                     position: toast.POSITION.TOP_CENTER,
                     onClose: () => {
-                        window.location.replace('/login');
+                        history.push('/login');
                     },
                 });
-            } else {
+            } else if (message === 'Something went terribly wrong') {
                 toast.error(message, {
                     position: toast.POSITION.TOP_CENTER,
                 });

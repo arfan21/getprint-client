@@ -10,7 +10,7 @@
     "@testing-library/user-event": "^12.8.3",
     "@yarnpkg/pnpify": "^3.0.0-rc.6",
     "axios": "^0.21.1",
-    "history": "^5.0.0",
+    "history": "4.10.1",
     "query-string": "^7.0.0",
     "react": "^17.0.2",
     "react-content-loader": "^6.0.3",

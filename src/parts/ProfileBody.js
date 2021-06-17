@@ -4,16 +4,16 @@ import { ReactComponent as DefaultAvatar } from '../assets/default-avatar.svg';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
 import { useSelector } from 'react-redux';
 import Cookies from 'universal-cookie';
+import { users } from 'constants/api/users';
 
 export const ProfileBody = () => {
     const cookies = new Cookies();
     const history = useHistory();
     const location = useLocation();
     const user = useSelector((state) => state.users);
-    const logoutHandler = () => {
-        cookies.remove('X-GETPRINT-KEY');
-        cookies.remove('X-GETPRINT-REFRESH-TOKEN');
-        history.go('/');
+    const logoutHandler = async () => {
+        await users.logout();
+        window.location.replace('/');
     };
     return (
         <div className="py-6 h-full">
