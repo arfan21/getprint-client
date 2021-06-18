@@ -1,9 +1,8 @@
-import Cookies from 'universal-cookie';
+import { useSelector } from 'react-redux';
 import { Route, Redirect, withRouter } from 'react-router-dom';
 
 const ProtectedRoute = ({ component: Component, location, ...rest }) => {
-    const cookies = new Cookies();
-    const userCookies = cookies.get('X-GETPRINT-KEY');
+    const user = useSelector((state) => state.users);
 
     localStorage.removeItem('GETPRINT:redirect');
 
@@ -11,7 +10,7 @@ const ProtectedRoute = ({ component: Component, location, ...rest }) => {
         <Route
             {...rest}
             render={(props) =>
-                userCookies ? (
+                user ? (
                     <Component {...props} />
                 ) : (
                     <Redirect to={`/login?path=${location.pathname}`} />

@@ -5,11 +5,13 @@ import { ReactComponent as Logo } from '../assets/Logo.svg';
 import { useSelector } from 'react-redux';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
+import liff from '@line/liff';
 
 export const Header = () => {
     const [searchValue, setSearchValue] = useState('');
     const onChange = (e) => {
-        setSearchValue(e.target.value);
+        // setSearchValue(e.target.value);
+        setSearchValue(liff.getIDToken());
     };
 
     const user = useSelector((state) => state.users);
@@ -22,7 +24,7 @@ export const Header = () => {
                             <LazyLoadImage
                                 src={user?.picture}
                                 alt={user?.name}
-                                className="w-14 h-14"
+                                className="w-14 h-14 rounded-full"
                                 effect="blur"
                             ></LazyLoadImage>
                         ) : (

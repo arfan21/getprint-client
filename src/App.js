@@ -5,10 +5,9 @@ import { Following } from 'pages/Following';
 import { Login } from 'pages/Login';
 import { Register } from 'pages/Register';
 import DetailPartner from 'pages/DetailPartner';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { users } from 'constants/api/users';
 import { populateProfile } from 'store/actions/users';
-import Cookies from 'universal-cookie';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import GuestRoute from 'components/routers/GuestRoute';
@@ -17,20 +16,31 @@ import { Cart } from 'pages/Cart';
 import history from 'helpers/history';
 import Home from 'pages/Home';
 import Profile from 'pages/Profile';
+import liff from '@line/liff';
+import { LineCallback } from 'pages/LineCallback';
+import { liffInit } from 'store/actions/line';
 
 function App() {
     const dispatch = useDispatch();
-    console.log(process.env.REACT_APP_BASE_URL);
-
     useEffect(() => {
-        const cookies = new Cookies();
         const verifyUserLogin = async () => {
             try {
                 const userData = await users.verify();
+
                 dispatch(populateProfile(userData.data));
             } catch (error) {}
         };
 
+        const liffInitAsync = async () => {
+            try {
+                await liff.init({ liffId: process.env.REACT_APP_LINE_LIFF_ID });
+                dispatch(liffInit(true));
+            } catch (error) {
+                dispatch(liffInit(false));
+            }
+        };
+
+        liffInitAsync();
         verifyUserLogin();
     }, [dispatch]);
     return (
@@ -60,6 +70,12 @@ function App() {
                     ></ProtectedRoute>
 
                     <Route exact path="/" component={Home}></Route>
+
+                    <Route
+                        exact
+                        path="/line-callback"
+                        component={LineCallback}
+                    ></Route>
 
                     <Route
                         exact
