@@ -6,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { users } from 'constants/api/users';
 import liff from '@line/liff';
 import { populateProfile } from 'store/actions/users';
+import { setAccessToken } from 'store/actions/accessToken';
 
 export const ProfileBody = () => {
     const location = useLocation();
@@ -19,6 +20,7 @@ export const ProfileBody = () => {
         }
         await users.logout();
         dispatch(populateProfile(null));
+        dispatch(setAccessToken(null));
         history.push('/');
     };
     return (

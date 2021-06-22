@@ -21,6 +21,8 @@ export const LineCallback = () => {
                         id_token: idToken,
                     })
                     .then(async (res) => {
+                        dispatch(setAccessToken(res.data.token));
+                        setAuthorizationHeader(res.data.token);
                         const userData = await users.verify();
                         dispatch(populateProfile(userData.data));
                         history.push('/');

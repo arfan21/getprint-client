@@ -3,6 +3,9 @@ import axios from './index';
 import { users } from 'constants/api/users';
 import Cookies from 'universal-cookie';
 import history from 'helpers/history';
+import store from 'store';
+import { setAuthorizationHeader } from './setAuthorizationHeader';
+import { setAccessToken } from 'store/actions/accessToken';
 
 export default async function ErrorHandler(error) {
     const cookies = new Cookies();
@@ -21,11 +24,16 @@ export default async function ErrorHandler(error) {
 
                 originalRequest._retry = true;
 
-                await users.refreshToken();
+                const state = store.getState();
+                const accessToken = state.accessToken;
+                if (!accessToken) {
+                    const newToken = await users.refreshToken();
+                    setAuthorizationHeader(newToken.data.token);
+                    store.dispatch(setAccessToken(newToken.data.token));
+                }
 
                 return axios(originalRequest);
             } catch (error) {
-                console.log(typeof error.message);
                 message = error?.response?.data?.message ?? error;
             }
         } else {

@@ -19,11 +19,14 @@ import Profile from 'pages/Profile';
 import liff from '@line/liff';
 import { LineCallback } from 'pages/LineCallback';
 import { liffInit } from 'store/actions/line';
+import { setAuthorizationHeader } from 'configs/axios';
 
 function App() {
     const dispatch = useDispatch();
+    const accessToken = useSelector((state) => state.accessToken);
     useEffect(() => {
         const verifyUserLogin = async () => {
+            setAuthorizationHeader(accessToken);
             try {
                 const userData = await users.verify();
 
@@ -71,11 +74,11 @@ function App() {
 
                     <Route exact path="/" component={Home}></Route>
 
-                    <Route
+                    <GuestRoute
                         exact
                         path="/line-callback"
                         component={LineCallback}
-                    ></Route>
+                    ></GuestRoute>
 
                     <Route
                         exact

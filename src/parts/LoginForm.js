@@ -3,10 +3,9 @@ import { users } from 'constants/api/users';
 import { useForm } from 'helpers/hooks/useForm';
 import { populateProfile } from 'store/actions/users';
 import { useDispatch } from 'react-redux';
-import Cookies from 'universal-cookie';
-import queryString from 'query-string';
 import liff from '@line/liff';
-import { toast } from 'react-toastify';
+import { setAccessToken } from 'store/actions/accessToken';
+import { setAuthorizationHeader } from 'configs/axios';
 
 export const LoginForm = ({ setIsLoading }) => {
     const history = useHistory();
@@ -19,9 +18,13 @@ export const LoginForm = ({ setIsLoading }) => {
         setIsLoading(true);
         e.preventDefault();
         try {
-            await users.login(state);
-            const dataUser = await users.verify();
-            dispatch(populateProfile(dataUser.data));
+            const dataToken = await users.login(state);
+            dispatch(setAccessToken(dataToken.data.token));
+            setAuthorizationHeader(dataToken.data.token);
+
+            const userData = await users.verify();
+            dispatch(populateProfile(userData.data));
+
             history.push('/');
         } catch (error) {
             console.log(error);
