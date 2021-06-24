@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { ReactComponent as GpsIcon } from 'assets/gps.svg';
 import { ReactComponent as StarIcon } from 'assets/StarIcon.svg';
 import { ReactComponent as Print } from 'assets/Print.svg';
@@ -7,45 +7,81 @@ import { ReactComponent as Photocopy } from 'assets/PhotoCopy.svg';
 import { ReactComponent as Cart } from 'assets/Cart.svg';
 import { Qty } from 'components/form/qty';
 import { toast } from 'react-toastify';
-
+import { carts } from 'constants/api/carts';
+import { useHistory, useLocation } from 'react-router-dom';
 export const DetailPartnerBody = ({ partner }) => {
+    const history = useHistory();
+    const location = useLocation();
+    const path = location.pathname;
     const [state, setState] = useState({
         print: 0,
         scan: 0,
         fotocopy: 0,
     });
 
-    const [, setCart] = useState([]);
+    const [cart, setCart] = useState([]);
 
-    const addToCartHandler = () => {
-        setCart([]);
+    useEffect(() => {
         for (let key in state) {
-            if (state[key] > 0) {
-                setCart((item) => [
-                    ...item,
-                    {
-                        order_type: key,
-                        qty: state[key],
-                        partner_id: partner?.id,
-                    },
-                ]);
+            setCart((prevCart) => {
+                const index = prevCart.findIndex(
+                    (item) => item.order_type === key,
+                );
+
+                if (index >= 0) {
+                    if (state[key] === 0) {
+                        prevCart.splice(index, 1);
+                    } else {
+                        prevCart[index].qty = state[key];
+                    }
+
+                    return prevCart;
+                } else if (index === -1 && state[key] > 0) {
+                    const prevCartTemp = [
+                        ...prevCart,
+                        {
+                            order_type: key,
+                            qty: state[key],
+                            partner_id: partner?.id,
+                        },
+                    ];
+
+                    return prevCartTemp;
+                } else {
+                    return prevCart;
+                }
+            });
+        }
+    }, [state]);
+
+    const addToCartHandler = async () => {
+        if (cart.length === 0) {
+            const toastId = 'prevCart-length';
+            console.log('Order Minimum is 1 ');
+            if (!toast.isActive(toastId.current)) {
+                toast.error('Order Minimum is 1 ', {
+                    position: toast.POSITION.TOP_CENTER,
+                    toastId: toastId,
+                });
+            }
+        } else {
+            try {
+                await carts.create(cart);
+            } catch (err) {
+                if (err?.response?.status === 401) {
+                    const toastId = '401';
+                    if (!toast.isActive(toastId.current)) {
+                        toast.error('You need to login first', {
+                            position: toast.POSITION.TOP_CENTER,
+                            toastId: toastId,
+                            onClose: () => {
+                                history.push(`/login?path=${path}`);
+                            },
+                        });
+                    }
+                }
             }
         }
-
-        setCart((item) => {
-            if (item.length === 0) {
-                const toastId = 'item-length';
-                console.log('Order Minimum is 1 ');
-                if (!toast.isActive(toastId.current)) {
-                    toast.error('Order Minimum is 1 ', {
-                        position: toast.POSITION.TOP_CENTER,
-                        toastId: toastId,
-                    });
-                }
-            } else {
-                console.log(item);
-            }
-        });
     };
 
     return (

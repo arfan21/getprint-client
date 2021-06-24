@@ -1,10 +1,12 @@
-import { users } from 'constants/api/users';
+import { auth } from 'constants/api/auth';
 import React, { useEffect } from 'react';
-import { Link, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import liff from '@line/liff';
 import { useDispatch, useSelector } from 'react-redux';
 import { populateProfile } from 'store/actions/users';
 import HashLoader from 'react-spinners/HashLoader';
+import { setAccessToken } from 'store/actions/accessToken';
+import { setAuthorizationHeader } from 'configs/axios';
 
 export const LineCallback = () => {
     const dispatch = useDispatch();
@@ -16,14 +18,13 @@ export const LineCallback = () => {
         if (lineLiffInit) {
             if (liff.isLoggedIn()) {
                 const idToken = liff.getIDToken();
-                users
-                    .lineCallback({
-                        id_token: idToken,
-                    })
+                auth.lineCallback({
+                    id_token: idToken,
+                })
                     .then(async (res) => {
                         dispatch(setAccessToken(res.data.token));
                         setAuthorizationHeader(res.data.token);
-                        const userData = await users.verify();
+                        const userData = await auth.verify();
                         dispatch(populateProfile(userData.data));
                         history.push('/');
                     })

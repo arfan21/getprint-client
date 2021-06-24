@@ -1,14 +1,18 @@
 import { Link, useHistory, useLocation } from 'react-router-dom';
-import { users } from 'constants/api/users';
+import { auth } from 'constants/api/auth';
 import { useForm } from 'helpers/hooks/useForm';
 import { populateProfile } from 'store/actions/users';
 import { useDispatch } from 'react-redux';
 import liff from '@line/liff';
 import { setAccessToken } from 'store/actions/accessToken';
 import { setAuthorizationHeader } from 'configs/axios';
+import qs from 'query-string';
 
 export const LoginForm = ({ setIsLoading }) => {
     const history = useHistory();
+    const location = useLocation();
+    const queryString = qs.parse(location.search);
+
     const [state, setState] = useForm({
         email: '',
         password: '',
@@ -18,14 +22,14 @@ export const LoginForm = ({ setIsLoading }) => {
         setIsLoading(true);
         e.preventDefault();
         try {
-            const dataToken = await users.login(state);
+            const dataToken = await auth.login(state);
             dispatch(setAccessToken(dataToken.data.token));
             setAuthorizationHeader(dataToken.data.token);
 
-            const userData = await users.verify();
+            const userData = await auth.verify();
             dispatch(populateProfile(userData.data));
 
-            history.push('/');
+            history.push(queryString?.path ?? '/');
         } catch (error) {
             console.log(error);
             setIsLoading(false);

@@ -6,7 +6,7 @@ import { Login } from 'pages/Login';
 import { Register } from 'pages/Register';
 import DetailPartner from 'pages/DetailPartner';
 import { useDispatch, useSelector } from 'react-redux';
-import { users } from 'constants/api/users';
+import { auth } from 'constants/api/auth';
 import { populateProfile } from 'store/actions/users';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
@@ -28,7 +28,7 @@ function App() {
         const verifyUserLogin = async () => {
             setAuthorizationHeader(accessToken);
             try {
-                const userData = await users.verify();
+                const userData = await auth.verify();
 
                 dispatch(populateProfile(userData.data));
             } catch (error) {}

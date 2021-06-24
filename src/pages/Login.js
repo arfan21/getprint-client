@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { LoginForm } from 'parts/LoginForm';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
 import HashLoader from 'react-spinners/HashLoader';
 
 export const Login = () => {
-    const location = useLocation();
     const [isLoading, setIsLoading] = useState(false);
 
     return (

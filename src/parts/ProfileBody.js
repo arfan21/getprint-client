@@ -3,10 +3,11 @@ import { Link, useHistory, useLocation } from 'react-router-dom';
 import { ReactComponent as DefaultAvatar } from '../assets/default-avatar.svg';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
 import { useDispatch, useSelector } from 'react-redux';
-import { users } from 'constants/api/users';
+import { auth } from 'constants/api/auth';
 import liff from '@line/liff';
 import { populateProfile } from 'store/actions/users';
 import { setAccessToken } from 'store/actions/accessToken';
+import { setAuthorizationHeader } from 'configs/axios';
 
 export const ProfileBody = () => {
     const location = useLocation();
@@ -18,9 +19,10 @@ export const ProfileBody = () => {
         if (lineLiffInit) {
             liff.logout();
         }
-        await users.logout();
+        await auth.logout();
         dispatch(populateProfile(null));
         dispatch(setAccessToken(null));
+        setAuthorizationHeader(null);
         history.push('/');
     };
     return (
