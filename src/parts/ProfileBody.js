@@ -7,7 +7,6 @@ import { auth } from 'constants/api/auth';
 import liff from '@line/liff';
 import { populateProfile } from 'store/actions/users';
 import { setAccessToken } from 'store/actions/accessToken';
-import { setAuthorizationHeader } from 'configs/axios';
 
 export const ProfileBody = () => {
     const location = useLocation();
@@ -21,8 +20,7 @@ export const ProfileBody = () => {
         }
         await auth.logout();
         dispatch(populateProfile(null));
-        dispatch(setAccessToken(null));
-        setAuthorizationHeader(null);
+        dispatch(setAccessToken(null))
         history.push('/');
     };
     return (

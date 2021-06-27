@@ -1,12 +1,12 @@
+import React from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom';
 import { auth } from 'constants/api/auth';
 import { useForm } from 'helpers/hooks/useForm';
 import { populateProfile } from 'store/actions/users';
 import { useDispatch } from 'react-redux';
 import liff from '@line/liff';
-import { setAccessToken } from 'store/actions/accessToken';
-import { setAuthorizationHeader } from 'configs/axios';
 import qs from 'query-string';
+import { setAccessToken } from 'store/actions/accessToken';
 
 export const LoginForm = ({ setIsLoading }) => {
     const history = useHistory();
@@ -24,12 +24,11 @@ export const LoginForm = ({ setIsLoading }) => {
         try {
             const dataToken = await auth.login(state);
             dispatch(setAccessToken(dataToken.data.token));
-            setAuthorizationHeader(dataToken.data.token);
 
             const userData = await auth.verify();
             dispatch(populateProfile(userData.data));
 
-            history.push(queryString?.path ?? '/');
+            history.push(queryString?.path === "/profile"? "/" : queryString?.path ?? '/');
         } catch (error) {
             console.log(error);
             setIsLoading(false);

@@ -52,9 +52,9 @@ export const DetailPartnerBody = ({ partner }) => {
                 }
             });
         }
-    }, [state]);
+    }, [state, partner]);
 
-    const addToCartHandler = async () => {
+    const addToCartHandler = () => {
         if (cart.length === 0) {
             const toastId = 'prevCart-length';
             console.log('Order Minimum is 1 ');
@@ -64,24 +64,20 @@ export const DetailPartnerBody = ({ partner }) => {
                     toastId: toastId,
                 });
             }
-        } else {
-            try {
-                await carts.create(cart);
-            } catch (err) {
-                if (err?.response?.status === 401) {
-                    const toastId = '401';
-                    if (!toast.isActive(toastId.current)) {
-                        toast.error('You need to login first', {
-                            position: toast.POSITION.TOP_CENTER,
-                            toastId: toastId,
-                            onClose: () => {
-                                history.push(`/login?path=${path}`);
-                            },
-                        });
-                    }
-                }
-            }
+
+            return;
         }
+
+        carts
+            .create(cart)
+            .then((res) => {
+                console.log(res);
+            })
+            .catch((err) => {
+                if (err?.response?.status === 401) {
+                    history.push(`/login?path=${path}`);
+                }
+            });
     };
 
     return (
@@ -103,7 +99,7 @@ export const DetailPartnerBody = ({ partner }) => {
                 </div>
             </section>
             <section className="my-3 py-0 px-3">
-                <div className="bg-white shadow flex justify-between py-2">
+                <div className="bg-white shadow flex justify-between py-2 rounded-md">
                     <div className="flex items-center px-3 ">
                         <div className="px-1">
                             <StarIcon className="fill-poppins-orange"></StarIcon>
@@ -120,7 +116,7 @@ export const DetailPartnerBody = ({ partner }) => {
             </section>
             <section className="py-3 px-3">
                 <div className="flex items-start justify-start flex-col w-full">
-                    <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center">
+                    <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md">
                         <div>
                             <Print className="w-20 h-20"></Print>
                         </div>
@@ -138,7 +134,7 @@ export const DetailPartnerBody = ({ partner }) => {
                             ></Qty>
                         </div>
                     </div>
-                    <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center">
+                    <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md">
                         <div>
                             <Scan className="w-20 h-20"></Scan>
                         </div>
@@ -156,7 +152,7 @@ export const DetailPartnerBody = ({ partner }) => {
                             ></Qty>
                         </div>
                     </div>
-                    <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center">
+                    <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md">
                         <div>
                             <Photocopy className="w-20 h-20"></Photocopy>
                         </div>
@@ -177,7 +173,7 @@ export const DetailPartnerBody = ({ partner }) => {
                     </div>
                 </div>
             </section>
-            <section className="py-3 px-3">
+            <section className="py-0 px-3 sticky bottom-0">
                 <div className="flex items-start justify-items-start flex-col w-full">
                     <button
                         onClick={addToCartHandler}

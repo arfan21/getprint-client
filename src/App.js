@@ -5,7 +5,7 @@ import { Following } from 'pages/Following';
 import { Login } from 'pages/Login';
 import { Register } from 'pages/Register';
 import DetailPartner from 'pages/DetailPartner';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { auth } from 'constants/api/auth';
 import { populateProfile } from 'store/actions/users';
 import { ToastContainer } from 'react-toastify';
@@ -19,14 +19,11 @@ import Profile from 'pages/Profile';
 import liff from '@line/liff';
 import { LineCallback } from 'pages/LineCallback';
 import { liffInit } from 'store/actions/line';
-import { setAuthorizationHeader } from 'configs/axios';
 
 function App() {
     const dispatch = useDispatch();
-    const accessToken = useSelector((state) => state.accessToken);
     useEffect(() => {
         const verifyUserLogin = async () => {
-            setAuthorizationHeader(accessToken);
             try {
                 const userData = await auth.verify();
 

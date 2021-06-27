@@ -23,7 +23,7 @@ const DetailPartner = ({ match, history }) => {
             <section className="relative container mx-auto h-60 z-0">
                 <DetailPartnerHeader partner={partner}></DetailPartnerHeader>
             </section>
-            <section className="bg-poppins-white rounded-t-3xl container mx-auto px-4 pb-5 -mt-6 z-50 relative">
+            <section className="bg-poppins-white rounded-t-3xl container mx-0 px-4 pb-5 -mt-6 z-50 relative">
                 <DetailPartnerBody partner={partner}></DetailPartnerBody>
             </section>
         </div>

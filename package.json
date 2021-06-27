@@ -53,6 +53,7 @@
   },
   "devDependencies": {
     "autoprefixer": "^9",
+    "craco-esbuild": "^0.3.2",
     "eslint-config-react-app": "^6.0.0",
     "postcss": "^7",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.2"

@@ -20,7 +20,6 @@ export const HomeBody = () => {
                 for (let i = 0; i < 50; i++) {
                     data.push(res?.data[0]);
                 }
-
                 setdataPartner(data);
                 setIsLoading(false);
             })
@@ -28,6 +27,9 @@ export const HomeBody = () => {
                 console.log(err);
                 setIsLoading(false);
             });
+        return () => {
+            setIsLoading(false);
+        }
     }, []);
 
     const categoryHandler = (textContent) => {

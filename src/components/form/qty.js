@@ -31,7 +31,7 @@ export const Qty = ({ name, state, setState }) => {
                 disabled
             ></input>
             <button
-                className={`w-10 shadow rounded-lg focus:outline-none bg-poppins-white hover:bg-poppins-orange hover:text-white`}
+                className={`w-10 shadow rounded-lg focus:outline-none bg-poppins-white hover:bg-green-500 hover:text-white`}
                 name={name}
                 onClick={incrementQty}
             >

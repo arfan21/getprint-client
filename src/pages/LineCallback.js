@@ -6,7 +6,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { populateProfile } from 'store/actions/users';
 import HashLoader from 'react-spinners/HashLoader';
 import { setAccessToken } from 'store/actions/accessToken';
-import { setAuthorizationHeader } from 'configs/axios';
 
 export const LineCallback = () => {
     const dispatch = useDispatch();
@@ -22,8 +21,7 @@ export const LineCallback = () => {
                     id_token: idToken,
                 })
                     .then(async (res) => {
-                        dispatch(setAccessToken(res.data.token));
-                        setAuthorizationHeader(res.data.token);
+                        dispatch(setAccessToken(res.data.token))
                         const userData = await auth.verify();
                         dispatch(populateProfile(userData.data));
                         history.push('/');
@@ -33,7 +31,7 @@ export const LineCallback = () => {
                     });
             }
         }
-    }, [lineLiffInit, dispatch]);
+    }, [lineLiffInit, dispatch, history]);
 
     return (
         <div className="max-w-screen-sm  my-0 mx-auto relative box-border h-full bg-poppins-white ">

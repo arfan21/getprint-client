@@ -12,7 +12,7 @@ const Footer = ({ match, history }) => {
             : 'fill-poppins-gray';
     };
     return (
-        <div className="h-16">
+        <div className="h-16 w-full">
             <ul className="flex justify-between items-center py-5">
                 <li>
                     <Link to="/">

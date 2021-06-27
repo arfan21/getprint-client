@@ -28,7 +28,7 @@ export const Header = () => {
                                 effect="blur"
                             ></LazyLoadImage>
                         ) : (
-                            <DefaultAvatar className="fill-poppins-gray w-14 h-14"></DefaultAvatar>
+                            <DefaultAvatar className="fill-poppins-gray "></DefaultAvatar>
                         )}
                     </div>
                     <div className="px-2">
@@ -43,7 +43,7 @@ export const Header = () => {
             ) : (
                 <div className="flex flex-row w-full py-1 items-center">
                     <div className="px-2">
-                        <Logo className="fill-poppins-gray w-14 h-14"></Logo>
+                        <Logo className="fill-poppins-gray w-14 h-14" width="14" height="14"></Logo>
                     </div>
                     <div className="px-2 flex justify-center items-center">
                         <p className="text-poppins-blue-100">

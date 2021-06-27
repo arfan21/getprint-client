@@ -1,6 +1,6 @@
 import axios from 'axios';
-
 import errorHandler from './errorHandler';
+import store from 'store';
 
 const instance = axios.create({
     baseURL: `${process.env.REACT_APP_GETPRINT_API_URL}`,
@@ -10,7 +10,18 @@ const instance = axios.create({
     },
 });
 
-instance.interceptors.response.use((response) => response.data, errorHandler);
 
-export { setAuthorizationHeader } from './setAuthorizationHeader';
+instance.interceptors.response.use((response) => response.data, errorHandler);
+instance.interceptors.request.use((config) => {
+    const state = store.getState();
+    const accessToken = state.accessToken;
+    if(accessToken){
+        config.headers.Authorization = `Bearer ${accessToken}`; 
+    }else{
+        delete config.headers.Authorization 
+    }
+    
+    return config
+})
+
 export default instance;
