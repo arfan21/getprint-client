@@ -2,14 +2,49 @@ import React from 'react';
 
 export const Qty = ({ name, state, setState }) => {
     const incrementQty = (e) => {
-        let tempQty = state[e.target.name] + 1;
-        setState({ ...state, [e.target.name]: tempQty });
+        if (state.id) {
+            setState((oldState) => {
+                const foundIdx = oldState[state?.partner_id].findIndex(
+                    (item) => item?.id === state.id,
+                );
+
+                let tempQty = state?.qty + 1;
+                oldState[state?.partner_id][foundIdx] = {
+                    ...state,
+                    qty: tempQty,
+                };
+
+                return { ...oldState };
+            });
+
+            return;
+        }
+        let tempQty = state?.qty + 1;
+
+        setState({ ...state, qty: tempQty });
     };
 
     const decrementQty = (e) => {
-        if (state[e.target.name] > 0) {
-            let tempQty = state[e.target.name] - 1;
-            setState({ ...state, [e.target.name]: tempQty });
+        if (state.id && state?.qty > 1) {
+            setState((oldState) => {
+                const foundIdx = oldState[state?.partner_id].findIndex(
+                    (item) => item?.id === state.id,
+                );
+
+                let tempQty = state?.qty - 1;
+                oldState[state?.partner_id][foundIdx] = {
+                    ...state,
+                    qty: tempQty,
+                };
+
+                return { ...oldState };
+            });
+
+            return;
+        }
+        if (!state.id && state?.qty > 0) {
+            let tempQty = state?.qty - 1;
+            setState({ ...state, qty: tempQty });
         }
     };
 
@@ -25,7 +60,7 @@ export const Qty = ({ name, state, setState }) => {
             <input
                 name={name}
                 type="text"
-                value={state[name]}
+                value={state?.qty ?? 0}
                 className=" form-input outline-none border-none focus:outline-none w-12 text-center"
                 readOnly
                 disabled

@@ -2,20 +2,14 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { LoginForm } from 'parts/LoginForm';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
-import HashLoader from 'react-spinners/HashLoader';
+import { Loading } from 'parts/Loading';
 
 export const Login = () => {
     const [isLoading, setIsLoading] = useState(false);
 
     return (
         <div className="max-w-screen-sm  my-0 mx-auto relative box-border h-full bg-poppins-white">
-            <div
-                className={`absolute flex items-center justify-center w-full h-full bg-poppins-blue-300 z-50 bg-opacity-50 ${
-                    isLoading ? 'visible' : 'invisible'
-                }`}
-            >
-                <HashLoader color="#0E0943" size="150px"></HashLoader>
-            </div>
+            {isLoading && <Loading></Loading>}
             <div className="py-6 px-3 h-full">
                 <div className="pb-4  px-4">
                     <Link to="/">

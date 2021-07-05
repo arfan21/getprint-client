@@ -17,9 +17,9 @@ export const HomeBody = () => {
             .getAll(queryParams)
             .then((res) => {
                 const data = res?.data;
-                for (let i = 0; i < 50; i++) {
-                    data.push(res?.data[0]);
-                }
+                // for (let i = 0; i < 50; i++) {
+                //     data.push(res?.data[0]);
+                // }
                 setdataPartner(data);
                 setIsLoading(false);
             })
@@ -29,7 +29,7 @@ export const HomeBody = () => {
             });
         return () => {
             setIsLoading(false);
-        }
+        };
     }, []);
 
     const categoryHandler = (textContent) => {

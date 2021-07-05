@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { ReactComponent as FollowIcon } from 'assets/FollowIcon.svg';
 import { ReactComponent as LoveButton } from 'assets/LoveButton.svg';
 import { ReactComponent as BackButton } from 'assets/BackButton.svg';
+import { ReactComponent as Cart } from 'assets/Cart.svg';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import 'react-lazy-load-image-component/src/effects/blur.css';
 
@@ -40,15 +41,21 @@ export const DetailPartnerHeader = ({ partner }) => {
                     </div>
                 </div>
                 <div
-                    className="cursor-pointer w-8 h-8"
-                    onClick={() => setFollowing(!following)}
+                    className=" w-16 h-8"
                 >
                     <div className="bg-white w-full h-full flex items-center justify-center rounded-lg shadow">
-                        {following ? (
-                            <LoveButton className="fill-poppins-orange"></LoveButton>
-                        ) : (
-                            <FollowIcon className="fill-poppins-orange"></FollowIcon>
-                        )}
+                        <div className="px-1 cursor-pointer" onClick={() => setFollowing(!following)}>
+                            {following ? (
+                                <LoveButton className="fill-poppins-orange "></LoveButton>
+                            ) : (
+                                <FollowIcon className="fill-poppins-orange"></FollowIcon>
+                            )}
+                        </div>
+                        <Link to="/cart">
+                            <div className="px-1 cursor-pointer">
+                                <Cart className="fill-poppins-orange"></Cart>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>

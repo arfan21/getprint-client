@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { auth } from 'constants/api/auth';
 import liff from '@line/liff';
 import { populateProfile } from 'store/actions/users';
-import { setAccessToken } from 'store/actions/accessToken';
+import { setAuthAccessToken } from 'store/actions/authentication';
 
 export const ProfileBody = () => {
     const location = useLocation();
@@ -20,7 +20,7 @@ export const ProfileBody = () => {
         }
         await auth.logout();
         dispatch(populateProfile(null));
-        dispatch(setAccessToken(null))
+        dispatch(setAuthAccessToken(null));
         history.push('/');
     };
     return (

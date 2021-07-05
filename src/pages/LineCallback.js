@@ -4,14 +4,14 @@ import { useHistory } from 'react-router-dom';
 import liff from '@line/liff';
 import { useDispatch, useSelector } from 'react-redux';
 import { populateProfile } from 'store/actions/users';
-import HashLoader from 'react-spinners/HashLoader';
-import { setAccessToken } from 'store/actions/accessToken';
-
+import { setAuthAccessToken } from 'store/actions/authentication';
+import { Loading } from 'parts/Loading';
 export const LineCallback = () => {
     const dispatch = useDispatch();
     const history = useHistory();
 
     const lineLiffInit = useSelector((state) => state.line);
+    const authentication = useSelector((state) => state.authentication);
 
     useEffect(() => {
         if (lineLiffInit) {
@@ -21,7 +21,7 @@ export const LineCallback = () => {
                     id_token: idToken,
                 })
                     .then(async (res) => {
-                        dispatch(setAccessToken(res.data.token))
+                        dispatch(setAuthAccessToken(res.data.token));
                         const userData = await auth.verify();
                         dispatch(populateProfile(userData.data));
                         history.push('/');
@@ -33,13 +33,9 @@ export const LineCallback = () => {
         }
     }, [lineLiffInit, dispatch, history]);
 
-    return (
-        <div className="max-w-screen-sm  my-0 mx-auto relative box-border h-full bg-poppins-white ">
-            <div
-                className={`absolute flex items-center justify-center w-full h-full bg-poppins-blue-300 z-50 bg-opacity-50`}
-            >
-                <HashLoader color="#0E0943" size="150px"></HashLoader>
-            </div>
-        </div>
-    );
+    if (authentication.IsLoading) {
+        return <Loading></Loading>;
+    }
+
+    return <Loading></Loading>;
 };

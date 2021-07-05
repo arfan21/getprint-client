@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { ReactComponent as GpsIcon } from 'assets/gps.svg';
 import { ReactComponent as StarIcon } from 'assets/StarIcon.svg';
 import { ReactComponent as Print } from 'assets/Print.svg';
@@ -9,55 +9,56 @@ import { Qty } from 'components/form/qty';
 import { toast } from 'react-toastify';
 import { carts } from 'constants/api/carts';
 import { useHistory, useLocation } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 export const DetailPartnerBody = ({ partner }) => {
     const history = useHistory();
     const location = useLocation();
     const path = location.pathname;
-    const [state, setState] = useState({
-        print: 0,
-        scan: 0,
-        fotocopy: 0,
+
+    const [cartPrint, setCartPrint] = useState({
+        order_type: 'print',
+        qty: 0,
+    });
+    const [cartScan, setCartScan] = useState({
+        order_type: 'scan',
+        qty: 0,
+    });
+    const [cartFotocopy, setCartFotocopy] = useState({
+        order_type: 'fotocopy',
+        qty: 0,
     });
 
-    const [cart, setCart] = useState([]);
-
-    useEffect(() => {
-        for (let key in state) {
-            setCart((prevCart) => {
-                const index = prevCart.findIndex(
-                    (item) => item.order_type === key,
-                );
-
-                if (index >= 0) {
-                    if (state[key] === 0) {
-                        prevCart.splice(index, 1);
-                    } else {
-                        prevCart[index].qty = state[key];
-                    }
-
-                    return prevCart;
-                } else if (index === -1 && state[key] > 0) {
-                    const prevCartTemp = [
-                        ...prevCart,
-                        {
-                            order_type: key,
-                            qty: state[key],
-                            partner_id: partner?.id,
-                        },
-                    ];
-
-                    return prevCartTemp;
-                } else {
-                    return prevCart;
-                }
-            });
-        }
-    }, [state, partner]);
+    const users = useSelector((state) => state.users);
 
     const addToCartHandler = () => {
-        if (cart.length === 0) {
-            const toastId = 'prevCart-length';
-            console.log('Order Minimum is 1 ');
+        if (!users) {
+            history.push(`/login?path=${path}`);
+        }
+        const newCart = [];
+        if (cartPrint.qty > 0) {
+            newCart.push({
+                ...cartPrint,
+                partner_id: partner?.id,
+                user_id: users.sub,
+            });
+        }
+        if (cartScan.qty > 0) {
+            newCart.push({
+                ...cartScan,
+                partner_id: partner?.id,
+                user_id: users.sub,
+            });
+        }
+        if (cartFotocopy.qty > 0) {
+            newCart.push({
+                ...cartFotocopy,
+                partner_id: partner?.id,
+                user_id: users.sub,
+            });
+        }
+
+        const toastId = 'addtocart';
+        if (newCart.length === 0) {
             if (!toast.isActive(toastId.current)) {
                 toast.error('Order Minimum is 1 ', {
                     position: toast.POSITION.TOP_CENTER,
@@ -69,9 +70,15 @@ export const DetailPartnerBody = ({ partner }) => {
         }
 
         carts
-            .create(cart)
+            .create(newCart)
             .then((res) => {
                 console.log(res);
+                if (!toast.isActive(toastId.current)) {
+                    toast.info('Success add item to cart', {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: toastId,
+                    });
+                }
             })
             .catch((err) => {
                 if (err?.response?.status === 401) {
@@ -129,8 +136,8 @@ export const DetailPartnerBody = ({ partner }) => {
                         <div className="flex w-full justify-end">
                             <Qty
                                 name="print"
-                                state={state}
-                                setState={setState}
+                                state={cartPrint}
+                                setState={setCartPrint}
                             ></Qty>
                         </div>
                     </div>
@@ -147,8 +154,8 @@ export const DetailPartnerBody = ({ partner }) => {
                         <div className="flex w-full justify-end">
                             <Qty
                                 name="scan"
-                                state={state}
-                                setState={setState}
+                                state={cartScan}
+                                setState={setCartScan}
                             ></Qty>
                         </div>
                     </div>
@@ -166,8 +173,8 @@ export const DetailPartnerBody = ({ partner }) => {
                         <div className="flex w-full justify-end">
                             <Qty
                                 name="fotocopy"
-                                state={state}
-                                setState={setState}
+                                state={cartFotocopy}
+                                setState={setCartFotocopy}
                             ></Qty>
                         </div>
                     </div>

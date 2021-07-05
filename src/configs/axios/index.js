@@ -10,18 +10,17 @@ const instance = axios.create({
     },
 });
 
-
 instance.interceptors.response.use((response) => response.data, errorHandler);
 instance.interceptors.request.use((config) => {
     const state = store.getState();
-    const accessToken = state.accessToken;
-    if(accessToken){
-        config.headers.Authorization = `Bearer ${accessToken}`; 
-    }else{
-        delete config.headers.Authorization 
+    const authentication = state.authentication;
+    if (authentication.accessToken) {
+        config.headers.Authorization = `Bearer ${authentication.accessToken}`;
+    } else {
+        delete config.headers.Authorization;
     }
-    
-    return config
-})
+
+    return config;
+});
 
 export default instance;
