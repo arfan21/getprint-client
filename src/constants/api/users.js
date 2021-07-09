@@ -7,8 +7,5 @@ export const users = {
                 'Content-Type': 'application/json',
             },
         }),
-    getById: (token) =>
-        axios.get(`/v1/user`, {
-            auth: token,
-        }),
+    getById: () => axios.get(`/v1/user`),
 };

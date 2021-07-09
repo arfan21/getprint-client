@@ -11,6 +11,7 @@ const instance = axios.create({
 });
 
 instance.interceptors.response.use((response) => response.data, errorHandler);
+
 instance.interceptors.request.use((config) => {
     const state = store.getState();
     const authentication = state.authentication;
@@ -19,7 +20,6 @@ instance.interceptors.request.use((config) => {
     } else {
         delete config.headers.Authorization;
     }
-
     return config;
 });
 

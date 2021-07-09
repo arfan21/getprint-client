@@ -1,6 +1,5 @@
 import { carts } from 'constants/api/carts';
 import React, { useEffect, useRef, useState } from 'react';
-import { useSelector } from 'react-redux';
 import { ReactComponent as Print } from 'assets/Print.svg';
 import { ReactComponent as Scan } from 'assets/Scan.svg';
 import { ReactComponent as Photocopy } from 'assets/PhotoCopy.svg';
@@ -10,30 +9,25 @@ import { partners } from 'constants/api/partners';
 import { Link } from 'react-router-dom';
 
 export const CartBody = () => {
-    const [cart, setCart] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);
+    const [cart, setCart] = useState({});
+    const [isLoading, setIsLoading] = useState(true);
     const [dataPartners, setDataPartners] = useState([]);
-    const [isFirstFetchCart, setIsFirstFetchCart] = useState(true);
     const firstRender = useRef(true);
-    const users = useSelector((state) => state.users);
 
     useEffect(() => {
         const fetchCartsandPartners = async () => {
-            setIsLoading(true);
             try {
-                const cartResponse = await carts.getByUserId(users?.sub);
+                const cartResponse = await carts.getByUserId();
+
                 const dataCart = cartResponse?.data.reduce((r, a) => {
                     r[a.partner_id] = [...(r[a.partner_id] || []), a];
                     return r;
                 }, {});
-
                 const promisisFetchPartner = [];
                 Object.keys(dataCart).forEach(async (partnerId) => {
                     promisisFetchPartner.push(partners.getById(partnerId));
                 });
-
                 const resPartners = await Promise.all(promisisFetchPartner);
-
                 resPartners.forEach((dataPartner) => {
                     setDataPartners((oldDataPartners) => [
                         ...oldDataPartners,
@@ -41,58 +35,55 @@ export const CartBody = () => {
                     ]);
                 });
                 setCart(dataCart);
+
                 setIsLoading(false);
             } catch (error) {
-                setCart([]);
+                setCart({});
+
                 setIsLoading(false);
-                setIsFirstFetchCart(true);
             }
         };
 
         fetchCartsandPartners();
-    }, [users]);
+    }, []);
 
     useEffect(() => {
-        const updateCart = setTimeout(async () => {
-            console.log('first render', firstRender.current);
-            console.log('first fetc', isFirstFetchCart);
-            try {
-                if (firstRender.current) {
-                    firstRender.current = false;
-                    setIsFirstFetchCart(false);
-                    return;
-                }
+        if (Object.keys(cart).length > 0) {
+            const updateCart = setTimeout(async () => {
+                try {
+                    if (firstRender.current) {
+                        firstRender.current = false;
+                        return;
+                    }
+                    const newCart = [];
 
-                if (isFirstFetchCart) {
-                    setIsFirstFetchCart(false);
-                    return;
-                }
-
-                const newCart = [];
-
-                Object.keys(cart).forEach((partnerId) => {
-                    cart[partnerId].forEach((item) => {
-                        newCart.push(item);
+                    Object.keys(cart).forEach((partnerId) => {
+                        cart[partnerId].forEach((item) => {
+                            newCart.push(item);
+                        });
                     });
-                });
 
-                if (newCart.length > 0) {
-                    await carts.updateBatch(newCart);
+                    if (newCart.length > 0) {
+                        await carts.updateBatch(newCart);
+                    }
+                } catch (error) {
+                    firstRender.current = false;
                 }
-            } catch (error) {
-                setIsFirstFetchCart(false);
-            }
-        }, 1000);
-        return () => clearTimeout(updateCart);
+            }, 1000);
+            return () => clearTimeout(updateCart);
+        }
+
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cart]);
+
+    const deleteCartHandler = () => {};
 
     return (
         <div className="pt-6 pb-2 px-2">
             <div className="flex items-start justify-start flex-col w-full">
                 {isLoading && <CardLoader></CardLoader>}
                 {isLoading && <CardLoader></CardLoader>}
-                {Object.keys(cart).length > 0 &&
+                {Object.keys(cart).length > 0 ? (
                     Object.keys(cart).map((partnerId, idx) => {
                         let partner = dataPartners.find(
                             (data) => data.id === Number(partnerId),
@@ -148,7 +139,12 @@ export const CartBody = () => {
                                 })}
                             </React.Fragment>
                         );
-                    })}
+                    })
+                ) : isLoading ? (
+                    ''
+                ) : (
+                    <div>Your Getprint Cart is Empty</div>
+                )}
             </div>
         </div>
     );

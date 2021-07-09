@@ -26,8 +26,7 @@ function App() {
         const verifyUserLogin = async () => {
             try {
                 const userData = await auth.verify();
-
-                dispatch(populateProfile(userData.data));
+                dispatch(populateProfile(userData?.data));
             } catch (error) {}
         };
 

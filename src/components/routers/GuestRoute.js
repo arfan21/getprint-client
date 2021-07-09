@@ -21,15 +21,5 @@ const GuestRoute = ({ component: Component, location, ...rest }) => {
     }
 
     return <Route {...rest} render={(props) => <Component {...props} />} />;
-    // return (
-    //     <>
-    //         {authentication.isLoading && <Loading></Loading>}
-    //         {!authentication.isLoading && authentication.isAuthenticated ? (
-    //             <Redirect to={`/`} />
-    //         ) : (
-    //             <Route {...rest} render={(props) => <Component {...props} />} />
-    //         )}
-    //     </>
-    // );
 };
 export default withRouter(GuestRoute);

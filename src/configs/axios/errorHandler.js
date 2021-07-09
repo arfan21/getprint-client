@@ -35,17 +35,22 @@ export default async function ErrorHandler(error) {
 
             const state = store.getState();
             const authentication = state.authentication;
-            const user = state.users;
+            const users = state.users;
             let expired;
 
-            if (user) {
-                expired = Date.now() >= user.exp * 1000;
+            if (users) {
+                expired = Date.now() >= users.exp * 1000;
             }
 
             if (!authentication.accessToken || expired) {
                 store.dispatch(setAuthIsLoading(true));
                 const newToken = await auth.refreshToken();
                 store.dispatch(setAuthAccessToken(newToken.data.token));
+                if (expired) {
+                    store.dispatch(populateProfile(null));
+                    const newDataUser = await auth.verify();
+                    store.dispatch(populateProfile(newDataUser?.data));
+                }
             }
 
             return axios(originalRequest);
