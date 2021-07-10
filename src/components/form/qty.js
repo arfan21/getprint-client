@@ -49,9 +49,9 @@ export const Qty = ({ name, state, setState }) => {
     };
 
     return (
-        <>
+        <div className="flex flex-row">
             <button
-                className="w-10 shadow bg-poppins-white hover:bg-poppins-orange hover:text-white rounded-lg focus:outline-none"
+                className="w-10 h-10 shadow bg-poppins-white hover:bg-poppins-orange hover:text-white rounded-lg focus:outline-none"
                 name={name}
                 onClick={decrementQty}
             >
@@ -66,12 +66,12 @@ export const Qty = ({ name, state, setState }) => {
                 disabled
             ></input>
             <button
-                className={`w-10 shadow rounded-lg focus:outline-none bg-poppins-white hover:bg-green-500 hover:text-white`}
+                className={`w-10 h-10  shadow rounded-lg focus:outline-none bg-poppins-white hover:bg-green-500 hover:text-white`}
                 name={name}
                 onClick={incrementQty}
             >
                 &#xff0b;
             </button>
-        </>
+        </div>
     );
 };

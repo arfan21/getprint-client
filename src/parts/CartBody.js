@@ -3,6 +3,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import { ReactComponent as Print } from 'assets/Print.svg';
 import { ReactComponent as Scan } from 'assets/Scan.svg';
 import { ReactComponent as Photocopy } from 'assets/PhotoCopy.svg';
+import { ReactComponent as Delete } from 'assets/delete.svg';
 import { Qty } from 'components/form/qty';
 import CardLoader from './CardLoader';
 import { partners } from 'constants/api/partners';
@@ -12,6 +13,7 @@ export const CartBody = () => {
     const [cart, setCart] = useState({});
     const [isLoading, setIsLoading] = useState(true);
     const [dataPartners, setDataPartners] = useState([]);
+    const [isDeleteCart, setIsDeleteCart] = useState(false);
     const firstRender = useRef(true);
 
     useEffect(() => {
@@ -49,12 +51,18 @@ export const CartBody = () => {
 
     useEffect(() => {
         if (Object.keys(cart).length > 0) {
+            if (firstRender.current) {
+                firstRender.current = false;
+                return;
+            }
+
+            if (isDeleteCart) {
+                setIsDeleteCart(false);
+                return;
+            }
+
             const updateCart = setTimeout(async () => {
                 try {
-                    if (firstRender.current) {
-                        firstRender.current = false;
-                        return;
-                    }
                     const newCart = [];
 
                     Object.keys(cart).forEach((partnerId) => {
@@ -76,7 +84,35 @@ export const CartBody = () => {
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [cart]);
 
-    const deleteCartHandler = () => {};
+    const deleteCartHandler = (cartId) => {
+        setIsDeleteCart(true);
+        const tempCart = { ...cart };
+
+        // find partner id
+        const partnerId = Object.keys(tempCart).find((partnerId) =>
+            tempCart[partnerId].find((item) => item.id === cartId),
+        );
+
+        // find cart index
+        const cartIndex = tempCart[partnerId].findIndex(
+            (item) => item.id === cartId,
+        );
+
+        tempCart[partnerId].splice(cartIndex, 1);
+
+        carts
+            .deleteById(cartId)
+            .then((res) => {
+                if (tempCart[partnerId].length === 0) {
+                    delete tempCart[partnerId];
+                }
+
+                setCart(tempCart);
+            })
+            .catch((err) => {
+                console.log(err);
+            });
+    };
 
     return (
         <div className="pt-6 pb-2 px-2">
@@ -98,7 +134,7 @@ export const CartBody = () => {
                                 {cart[partnerId].map((item, index) => {
                                     return (
                                         <div
-                                            className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md"
+                                            className="relative bg-white shadow py-3 px-3 my-2 w-full h-full flex justify-start items-center rounded-md"
                                             key={index}
                                         >
                                             <div>
@@ -123,16 +159,24 @@ export const CartBody = () => {
                                                 Rp.{partner?.print} / sheet
                                             </p> */}
                                             </div>
-                                            <div className="flex w-full justify-end">
-                                                <Qty
-                                                    name={
-                                                        item?.order_type +
-                                                            item?.partner_id ??
-                                                        ''
+                                            <div className="flex w-full justify-end items-center">
+                                                <div
+                                                    onClick={() =>
+                                                        deleteCartHandler(
+                                                            item?.id,
+                                                        )
                                                     }
-                                                    state={item}
-                                                    setState={setCart}
-                                                ></Qty>
+                                                    className="group cursor-pointer px-1 mx-1 w-10 h-10 flex justify-center items-center shadow bg-poppins-white rounded-lg  hover:bg-poppins-orange"
+                                                >
+                                                    <Delete className="w-5 h-5 fill-poppins-orange group-hover:fill-white"></Delete>
+                                                </div>
+                                                <div className="px-1 mx-1">
+                                                    <Qty
+                                                        name={item?.order_type}
+                                                        state={item}
+                                                        setState={setCart}
+                                                    ></Qty>
+                                                </div>
                                             </div>
                                         </div>
                                     );
