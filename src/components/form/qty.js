@@ -1,50 +1,67 @@
-import React from 'react';
+import React, { useEffect, useRef } from 'react';
 
-export const Qty = ({ name, state, setState }) => {
-    const incrementQty = (e) => {
-        if (state.id) {
-            setState((oldState) => {
-                const foundIdx = oldState[state?.partner_id].findIndex(
-                    (item) => item?.id === state.id,
-                );
-
-                let tempQty = state?.qty + 1;
-                oldState[state?.partner_id][foundIdx] = {
-                    ...state,
-                    qty: tempQty,
-                };
-
-                return { ...oldState };
-            });
-
+export const Qty = ({
+    value,
+    fileId,
+    cartId,
+    partnerId,
+    name,
+    state,
+    setState,
+    onChangeHandler,
+}) => {
+    const firstRender = useRef(true);
+    useEffect(() => {
+        if (firstRender.current) {
+            firstRender.current = false;
             return;
         }
-        let tempQty = state?.qty + 1;
 
-        setState({ ...state, qty: tempQty });
+        const onChangeTimeOut = setTimeout(
+            () => onChangeHandler(fileId, cartId, partnerId),
+            500,
+        );
+
+        return () => clearTimeout(onChangeTimeOut);
+    }, [value]);
+
+    const incrementQty = (e) => {
+        const cartByPartnerId = [...state[partnerId]];
+        const cartIndex = state[partnerId].findIndex(
+            (item) => item.id === cartId,
+        );
+        const cartByIndex = { ...cartByPartnerId[cartIndex] };
+
+        const fileIndex = cartByIndex.files.findIndex(
+            (file) => file.id === fileId,
+        );
+
+        const file = { ...cartByIndex.files[fileIndex], qty: value + 1 };
+
+        cartByIndex.files[fileIndex] = file;
+        cartByPartnerId[cartIndex] = cartByIndex;
+
+        setState({ ...state, [partnerId]: cartByPartnerId });
     };
 
     const decrementQty = (e) => {
-        if (state.id && state?.qty > 1) {
-            setState((oldState) => {
-                const foundIdx = oldState[state?.partner_id].findIndex(
-                    (item) => item?.id === state.id,
-                );
+        if (value > 1) {
+            const cartByPartnerId = [...state[partnerId]];
+            const cartIndex = state[partnerId].findIndex(
+                (item) => item.id === cartId,
+            );
+            const cartByIndex = { ...cartByPartnerId[cartIndex] };
 
-                let tempQty = state?.qty - 1;
-                oldState[state?.partner_id][foundIdx] = {
-                    ...state,
-                    qty: tempQty,
-                };
+            const fileIndex = cartByIndex.files.findIndex(
+                (file) => file.id === fileId,
+            );
 
-                return { ...oldState };
-            });
+            const file = { ...cartByIndex.files[fileIndex], qty: value - 1 };
 
-            return;
-        }
-        if (!state.id && state?.qty > 0) {
-            let tempQty = state?.qty - 1;
-            setState({ ...state, qty: tempQty });
+            cartByIndex.files[fileIndex] = file;
+            cartByPartnerId[cartIndex] = cartByIndex;
+
+            setState({ ...state, [partnerId]: cartByPartnerId });
         }
     };
 
@@ -60,7 +77,7 @@ export const Qty = ({ name, state, setState }) => {
             <input
                 name={name}
                 type="text"
-                value={state?.qty ?? 0}
+                value={value}
                 className=" form-input outline-none border-none focus:outline-none w-12 text-center"
                 readOnly
                 disabled

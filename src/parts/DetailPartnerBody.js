@@ -5,7 +5,7 @@ import { ReactComponent as Print } from 'assets/Print.svg';
 import { ReactComponent as Scan } from 'assets/Scan.svg';
 import { ReactComponent as Photocopy } from 'assets/PhotoCopy.svg';
 import { ReactComponent as Cart } from 'assets/Cart.svg';
-import { Qty } from 'components/form/qty';
+import { ReactComponent as AddToCart } from 'assets/AddToCart.svg';
 import { toast } from 'react-toastify';
 import { carts } from 'constants/api/carts';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -17,15 +17,12 @@ export const DetailPartnerBody = ({ partner }) => {
 
     const [cartPrint, setCartPrint] = useState({
         order_type: 'print',
-        qty: 0,
     });
     const [cartScan, setCartScan] = useState({
         order_type: 'scan',
-        qty: 0,
     });
     const [cartFotocopy, setCartFotocopy] = useState({
         order_type: 'fotocopy',
-        qty: 0,
     });
 
     const users = useSelector((state) => state.users);
@@ -72,7 +69,6 @@ export const DetailPartnerBody = ({ partner }) => {
         carts
             .create(newCart)
             .then((res) => {
-                console.log(res);
                 if (!toast.isActive(toastId.current)) {
                     toast.info('Success add item to cart', {
                         position: toast.POSITION.TOP_CENTER,
@@ -83,6 +79,56 @@ export const DetailPartnerBody = ({ partner }) => {
             .catch((err) => {
                 if (err?.response?.status === 401) {
                     history.push(`/login?path=${path}`);
+                }
+            });
+    };
+
+    const onSubmitHandler = (e) => {
+        e.preventDefault();
+        if (!users) {
+            history.push(`/login?path=${path}`);
+        }
+
+        const formId = e.target.id;
+        let newCart = {};
+
+        if (formId === cartPrint.order_type) {
+            newCart = { ...cartPrint };
+        }
+        if (formId === cartScan.order_type) {
+            newCart = { ...cartScan };
+        }
+        if (formId === cartFotocopy.order_type) {
+            newCart = { ...cartFotocopy };
+        }
+
+        newCart['partner_id'] = partner?.id;
+        newCart['user_id'] = users.sub;
+
+        const toastId = 'addtocart';
+
+        carts
+            .create(newCart)
+            .then((res) => {
+                if (!toast.isActive(toastId.current)) {
+                    toast.info('Success add item to cart', {
+                        position: toast.POSITION.TOP_CENTER,
+                        toastId: toastId,
+                    });
+                }
+            })
+            .catch((err) => {
+                if (err?.response?.status === 401) {
+                    history.push(`/login?path=${path}`);
+                }
+
+                if (err?.response?.status === 409) {
+                    if (!toast.isActive(toastId.current)) {
+                        toast.error('Item already exist in cart', {
+                            position: toast.POSITION.TOP_CENTER,
+                            toastId: toastId,
+                        });
+                    }
                 }
             });
     };
@@ -125,7 +171,7 @@ export const DetailPartnerBody = ({ partner }) => {
                 <div className="flex items-start justify-start flex-col w-full">
                     <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md">
                         <div>
-                            <Print className="w-20 h-20"></Print>
+                            <Print className="w-20 h-20 "></Print>
                         </div>
                         <div className="px-5 w-full ">
                             <p className="text-poppins-blue-700">Print</p>
@@ -133,13 +179,20 @@ export const DetailPartnerBody = ({ partner }) => {
                                 Rp.{partner?.print} / sheet
                             </p>
                         </div>
-                        <div className="flex w-full justify-end">
-                            <Qty
-                                name="print"
-                                state={cartPrint}
-                                setState={setCartPrint}
-                            ></Qty>
-                        </div>
+                        <form
+                            onSubmit={onSubmitHandler}
+                            className="flex w-full justify-end"
+                            id="print"
+                        >
+                            <button
+                                type="submit"
+                                className="outline-none focus:outline-none"
+                            >
+                                <div className="group px-2.5 py-2.5 hover:bg-green-500 bg-poppins-white rounded-lg cursor-pointer mx-3">
+                                    <AddToCart className="w-7 h-7 fill-black group-hover:fill-white"></AddToCart>
+                                </div>
+                            </button>
+                        </form>
                     </div>
                     <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md">
                         <div>
@@ -151,13 +204,20 @@ export const DetailPartnerBody = ({ partner }) => {
                                 Rp.{partner?.scan} / sheet
                             </p>
                         </div>
-                        <div className="flex w-full justify-end">
-                            <Qty
-                                name="scan"
-                                state={cartScan}
-                                setState={setCartScan}
-                            ></Qty>
-                        </div>
+                        <form
+                            onSubmit={onSubmitHandler}
+                            className="flex w-full justify-end"
+                            id="scan"
+                        >
+                            <button
+                                type="submit"
+                                className="outline-none focus:outline-none"
+                            >
+                                <div className="group px-2.5 py-2.5 hover:bg-green-500 bg-poppins-white rounded-lg cursor-pointer mx-3">
+                                    <AddToCart className="w-7 h-7 fill-black group-hover:fill-white"></AddToCart>
+                                </div>
+                            </button>
+                        </form>
                     </div>
                     <div className="bg-white shadow py-3 px-3 my-2 w-full flex justify-start items-center rounded-md">
                         <div>
@@ -170,13 +230,20 @@ export const DetailPartnerBody = ({ partner }) => {
                                 Rp.{partner?.fotocopy} / sheet
                             </p>
                         </div>
-                        <div className="flex w-full justify-end">
-                            <Qty
-                                name="fotocopy"
-                                state={cartFotocopy}
-                                setState={setCartFotocopy}
-                            ></Qty>
-                        </div>
+                        <form
+                            onSubmit={onSubmitHandler}
+                            className="flex w-full justify-end"
+                            id="fotocopy"
+                        >
+                            <button
+                                type="submit"
+                                className="outline-none focus:outline-none"
+                            >
+                                <div className="group px-2.5 py-2.5 hover:bg-green-500 bg-poppins-white rounded-lg cursor-pointer mx-3">
+                                    <AddToCart className="w-7 h-7 fill-black group-hover:fill-white"></AddToCart>
+                                </div>
+                            </button>
+                        </form>
                     </div>
                 </div>
             </section>

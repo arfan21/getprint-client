@@ -1526,6 +1526,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.0.0":
+  version: 7.14.6
+  resolution: "@babel/runtime@npm:7.14.6"
+  dependencies:
+    regenerator-runtime: ^0.13.4
+  checksum: dd931f6ef1c8dab295c4a00c592db6352bf12a5c443f8222304d5c1d3e88d795fa949afcb6f053eec2e69e9827a17ff274524c1cd43813f56b61e3a540274d2f
+  languageName: node
+  linkType: hard
+
 "@babel/runtime@npm:^7.1.2, @babel/runtime@npm:^7.12.1, @babel/runtime@npm:^7.12.5, @babel/runtime@npm:^7.9.2":
   version: 7.14.0
   resolution: "@babel/runtime@npm:7.14.0"
@@ -7325,6 +7334,18 @@ __metadata:
   languageName: node
   linkType: hard
 
+"file-loader@npm:^6.0.0":
+  version: 6.2.0
+  resolution: "file-loader@npm:6.2.0"
+  dependencies:
+    loader-utils: ^2.0.0
+    schema-utils: ^3.0.0
+  peerDependencies:
+    webpack: ^4.0.0 || ^5.0.0
+  checksum: 0f103418c072ec66c081a9908cd7824ee19905e18be16889cb050f5f373998afaf7ca4c2fd2df4cabf703a2cd526aefe59105930e3f8d266a5b35e6d5f5b3cf4
+  languageName: node
+  linkType: hard
+
 "file-type@npm:^15.0.0":
   version: 15.0.1
   resolution: "file-type@npm:15.0.1"
@@ -7807,6 +7828,7 @@ fsevents@^1.2.7:
     react-content-loader: ^6.0.3
     react-dom: ^17.0.2
     react-lazy-load-image-component: ^1.5.1
+    react-pdf: ^5.3.2
     react-redux: ^7.2.4
     react-router-dom: ^5.2.0
     react-scripts: ^4.0.3
@@ -10510,6 +10532,13 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"make-cancellable-promise@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "make-cancellable-promise@npm:1.0.0"
+  checksum: 0ee86eb49c0207a8416d9ebf1119c9318579b3c411daffc4b11fd981e51c0c47d16188de0756c3dae19d57551598f7b77bb670ca55958014c984b143811d705b
+  languageName: node
+  linkType: hard
+
 "make-dir@npm:^2.0.0":
   version: 2.1.0
   resolution: "make-dir@npm:2.1.0"
@@ -10526,6 +10555,13 @@ fsevents@^1.2.7:
   dependencies:
     semver: ^6.0.0
   checksum: 54b6f186c209c1b133d0d1710e6b04c41ebfcb0dac699e5a369ea1223f22c0574ef820b91db37cae6c245f5bda8aff9bfec94f6c23e7d75970446b34a58a79b0
+  languageName: node
+  linkType: hard
+
+"make-event-props@npm:^1.1.0":
+  version: 1.2.0
+  resolution: "make-event-props@npm:1.2.0"
+  checksum: 628334a87740fe02801b987c84c339b19697ff5d99a375c7793c0165d5bf5018f77ffffe8eb9f2bd4098c515e4c96bb231c7080340fa58a50c34b2bf5d2d6554
   languageName: node
   linkType: hard
 
@@ -10640,10 +10676,24 @@ fsevents@^1.2.7:
   languageName: node
   linkType: hard
 
+"merge-class-names@npm:^1.1.1":
+  version: 1.4.0
+  resolution: "merge-class-names@npm:1.4.0"
+  checksum: b8453886475ac1510901437b5f3e845046389b8f3452c472aecb29a945440a934f386587d386965075afa3eebf3252d13c375a2ce0f12a71d1e5c29a57089e68
+  languageName: node
+  linkType: hard
+
 "merge-descriptors@npm:1.0.1":
   version: 1.0.1
   resolution: "merge-descriptors@npm:1.0.1"
   checksum: 2d2a09eaac840a7ceac7a13b44b7c8abf3ecccd93a609c3525d8290cb5d814336cc7c0b1dd485ae3bc471ed354eeefb153475ce2e1604ccdf79eebe74021c192
+  languageName: node
+  linkType: hard
+
+"merge-refs@npm:^1.0.0":
+  version: 1.0.0
+  resolution: "merge-refs@npm:1.0.0"
+  checksum: 75e0b1a301e3ac9f057e4f4f8fc5c286af169e5cc7afc0786653ee7e7d338b8756c6b10a934793dfb80a9fbdb7bf2b002ddb173b0106329dfcf27909550a62fc
   languageName: node
   linkType: hard
 
@@ -11996,6 +12046,13 @@ fsevents@^1.2.7:
     safe-buffer: ^5.0.1
     sha.js: ^2.4.8
   checksum: 780dd6d50e750d302651638ff1edfe899d3a345e702f6c36fbdbdef3cfefd12d3d76698565022f4cd97d3f8ced5098f4ae2fdd067d3e1fca2849a70eb60e7620
+  languageName: node
+  linkType: hard
+
+"pdfjs-dist@npm:2.6.347":
+  version: 2.6.347
+  resolution: "pdfjs-dist@npm:2.6.347"
+  checksum: 64007e9fce35be3d9e8a2d106bdcd350cd71df4f4fe99a94adbdb4ee662ce1e84abfe0feff38d6cfa94fa79a291cfe96f1efd874e8417c52d7ab753d2046bf26
   languageName: node
   linkType: hard
 
@@ -13513,6 +13570,25 @@ fsevents@^1.2.7:
     react: ^15.x.x || ^16.x.x || ^17.x.x
     react-dom: ^15.x.x || ^16.x.x || ^17.x.x
   checksum: 3b5d576a82cc1233bb276c5d5cd8a4129afee42ccd64e7b69b04476d34e67cdf78d277f5272efd9a3066d50e53fb7224ffd5b5af0a680b32295114a54d91fba0
+  languageName: node
+  linkType: hard
+
+"react-pdf@npm:^5.3.2":
+  version: 5.3.2
+  resolution: "react-pdf@npm:5.3.2"
+  dependencies:
+    "@babel/runtime": ^7.0.0
+    file-loader: ^6.0.0
+    make-cancellable-promise: ^1.0.0
+    make-event-props: ^1.1.0
+    merge-class-names: ^1.1.1
+    merge-refs: ^1.0.0
+    pdfjs-dist: 2.6.347
+    prop-types: ^15.6.2
+  peerDependencies:
+    react: ^16.3.0 || ^17.0.0-0
+    react-dom: ^16.3.0 || ^17.0.0-0
+  checksum: d4c8bb692a9f9184e811b3c07242f05e137b929a805880e84f171e5694f02b4029e0ac1963aa4b46f8032eedd777ca395d17b70419b27eea80111a8e4b4c9339
   languageName: node
   linkType: hard
 
